@@ -1,0 +1,103 @@
+<form [formGroup]="formSearch" (ngSubmit)="filterEntity()">
+    <div class="row">
+      <div class="col-md-12 form-search">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="input-wrap">
+              <label class="title-detail">{{ "name" | translate }}</label>
+              <input nz-input formControlName="name" nzSize="default" (keyup.enter)="filterEntity()"/>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-wrap">
+              <label class="title-detail">{{ "status" | translate }}</label>
+              <nz-select
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder=""
+                nzSize="default"
+                formControlName="status">
+                <nz-option nzLabel="Hoạt động" nzValue="1"></nz-option>
+                <nz-option nzLabel="Không hoạt động" nzValue="0"></nz-option>
+                <nz-option nzLabel="Đã xóa" nzValue="-1"></nz-option>
+                <nz-option nzLabel="Tất cả" nzValue="-99"></nz-option>
+              </nz-select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="">
+  
+    <div class="">
+      <button nz-button nzType="primary" style="margin-left: 5px" class="button-search" (click)="filterEntity()">
+        <i nz-icon nzType="search"></i>{{ "common_button.search" | translate }}
+      </button>
+      <button
+        class=""
+        nz-button
+        nzType="primary"
+        type="button"
+        (click)="showModalAdd()"
+        *ngIf="isVisibleAdd">
+        <em class="fas fa-plus"></em> {{ "common_button.add" | translate }}
+      </button>
+    </div>
+  </div>
+  <div class="data-table">
+    <nz-table
+      #basicTable
+      nzShowSizeChanger
+      [nzData]="data"
+      [nzPageSize]="defaultPage"
+      nzSize="small"
+      [nzShowTotal]="rangeTemplate"
+      [nzLoading]="loading"
+      [nzTotal]="total"
+      [nzFrontPagination]="false"
+      [(nzPageIndex)]="entityFilter.page"
+      [(nzPageSize)]="entityFilter.pageSize"
+      (nzPageIndexChange)="searchData()"
+      (nzPageSizeChange)="searchData(true)"
+      (nzCurrentPageDataChange)="currentPageDataChange($event)">
+      <thead>
+      <tr>
+        <th class="text-nowrap text-center" width="10%">#</th>
+        <th class="text-nowrap text-center" width="25%">{{'name' | translate }}</th>
+        <th class="text-nowrap text-center" width="25%">{{'common_label.created_date' | translate}}</th>
+        <th class="text-nowrap text-center" width="25%">{{'common_label.status' | translate}}</th>
+        <th class="text-nowrap text-center" width="15%">{{'common_label.action' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of basicTable.data, index as i">
+        <td class="text-nowrap text-center">{{getRowIndex(i, basicTable.nzPageIndex, basicTable.nzPageSize)}}</td>
+        <td class="text-nowrap text-center">{{ data.name }}</td>
+        <td class="text-nowrap text-center">{{data.createdDate | date: 'yyyy-MM-dd'}}</td>
+        <td class="text-nowrap text-center">{{data.strStatus}}</td>
+        <td class="text-nowrap text-center">
+          <button *ngIf="isVisibleDelete " class="button-update btn-icon text-center" nz-popconfirm
+                  style="float: right"
+                  [nzPopconfirmTitle]="'common_alert.confirm_delete' | translate"
+                  [nzCancelText]="nzCanceText"
+                  [nzOkText]="nzOkText"
+                  (nzOnConfirm)="deleteEntity(data)"
+                  nzPopconfirmPlacement="top" nz-button
+                  nzType="link" nz-tooltip nzTooltipPlacement="bottom"
+                  nzTooltipTitle="{{ 'common_button.delete' | translate }}"><i
+            class="fal fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} {{'of' | translate }} {{ total }} {{'items' | translate }}
+    </ng-template>
+  </div>
+  <app-add-entity [isVisibleAdd]="isDisplayUpdateModal"
+                  [data]="entityAddModel"
+                  (submitAdd)="closeModelAdd($event)">
+  </app-add-entity>
+  

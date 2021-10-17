@@ -1,0 +1,46 @@
+
+.anticon{
+    display: inline-flex !important;
+  }
+  .button-search{
+    margin-left: -21px;
+  }
+  @media only screen and (min-width: 1200px) {
+    .row-name{
+      width: 164px;
+    }
+    .row-username{
+      width: 170px;
+    }
+    .row-email{
+      width: 189px;
+    }
+    .row-mobile{
+      width: 150px;
+    }
+    .row-status{
+      width: 100px;
+    }
+    .row-group {
+      width: 183px;
+    }
+    .row-date{
+      width: 128px;
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .group-table-btnAdd {
+      position: relative;
+  }
+  .button-search {
+    margin-left: 10px;
+  }
+  button.ant-btn.ng-star-inserted.ant-btn-primary {
+    position: absolute;
+    top: -42px;
+  }
+  .group-table-btnAdd .ant-btn.ant-dropdown-trigger.ng-star-inserted.ant-btn-default {
+    margin-left: 0!important;
+  }
+  }
+  

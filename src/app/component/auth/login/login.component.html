@@ -1,0 +1,38 @@
+<div class="page_login ">
+  <div class="container">
+    <div class="login_main">
+      <form mat-form [formGroup]="validateForm">
+        <div class="login_content">
+          <div class="logo-login">
+            <img src="assets/image/logo.png" width="200px" height="85px" alt="oneOss" />
+          </div>
+          <div class="login-text">
+            <div class="login-text-input">
+              <input type="text" autofocus="autofocus" mat-input formControlName="userName"
+                placeholder="{{ 'login_page.username' | translate }}" />
+            </div>
+          </div>
+          <div class="login-pass">
+            <input type="password" mat-input formControlName="password"
+              placeholder="{{ 'login_page.password' | translate }}" />
+          </div>
+          <div *ngIf="messageError">
+            <div class="alert alert-danger" role="alert">
+              {{messageError}}
+            </div>
+          </div>
+          <div class="login_remember">
+            <button id="btnLogin" mat-button class="login-form-button" color="primary" (click)="submitForm()">
+              {{ "login_page.sign_in" | translate }}
+            </button>
+          </div>
+          <div class="login_remember">
+            <button id="btnCasLogin" mat-button class="login-form-button" color="primary" (click)="casLogin()">
+              {{ "login_page.cas_login" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

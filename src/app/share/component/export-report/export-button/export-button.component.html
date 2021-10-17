@@ -1,0 +1,23 @@
+<button class="btn-export"
+nz-button nz-dropdown
+[nzLoading] = "isDownloading"
+[nzDisabled] ="isDownloading"
+[nzDropdownMenu]="menu"><i nz-icon nzType="printer" nzTheme="fill"></i>
+<i nz-icon nzType="down"></i></button>
+<nz-dropdown-menu #menu="nzDropdownMenu" >
+  <ul nz-menu>
+    <li nz-menu-item >
+      <app-export-report
+        [method]="method"
+        [url]="url"
+        [params]="params"
+        [fileName]="fileName"
+        title="{{ 'export_report_excel' | translate }}"
+        [format]="'xls'"
+        [icon]="'file-excel'"
+        (downloadEvent) = "isDownloading = $event"
+        >
+      </app-export-report>
+    </li>
+  </ul>
+</nz-dropdown-menu>

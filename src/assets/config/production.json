@@ -1,0 +1,14 @@
+{
+  "api": {
+    "baseUrl": "https://sandboxpay.vnptmedia.vn/cms-bss-api-release",
+    "partnerUrl": "https://sandboxpay.vnptmedia.vn/cms-partner-api-release/",
+    "assetCDNUrl": "https://sandboxpay.vnptmedia.vn/cms-bss-img"
+  },
+  "pageSize": [
+    10,
+    50,
+    100
+  ],
+  "page": 1,
+  "defaultPage": 10
+}

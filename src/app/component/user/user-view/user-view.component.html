@@ -1,0 +1,148 @@
+<form [formGroup]="formSearch" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-md-12 form-search">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-wrap">
+            <label class="title-detail">{{ "name" | translate }}</label>
+            <input matInput formControlName="name" (keyup.enter)="onSubmit()" />
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-wrap">
+            <label class="title-detail">{{ "email" | translate }}</label>
+            <input matInput formControlName="email" (keyup.enter)="onSubmit()" />
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-wrap">
+            <label class="title-detail">{{ "mobile" | translate }}</label>
+            <input matInput formControlName="mobile" (keyup.enter)="onSubmit()" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-wrap">
+            <label class="title-detail">{{ "group" | translate }}</label>
+            <mat-select formControlName="groupId">
+              <mat-option *ngFor="let option of groups" value="option.groupId">{{option.groupName}}</mat-option>
+            </mat-select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-wrap">
+            <label class="title-detail">{{ "status" | translate }}</label>
+            <mat-select formControlName="status">
+              <mat-option value="1">Active</mat-option>
+              <mat-option value="0">InActive</mat-option>
+            </mat-select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-wrap">
+            <label class="title-detail">{{ "username_login" | translate }}</label>
+            <input matInput formControlName="username" (keyup.enter)="onSubmit()" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="group-table-btnAdd">
+  <div class="search-form search-form-user">
+    <button mat-button class="btnAdd btnAddUser" color="primary" (click)="showModalAdd()" *ngIf="checkAdd">
+      <em class="fas fa-plus"></em> {{ "add_user" | translate }}
+    </button>
+
+    <report-download-selection [url]="DOWNLOAD_REPORT_URL" [fileName]="REPORT_NAME" [isAll]="!(numberOfChecked > 0)"
+      [params]="searchParam" [dataChoose]="getCheckedIdList()">
+    </report-download-selection>
+
+    <button mat-button class="btn-delete btn-delete-user" color="danger" (click)="showConfirm()"
+      *ngIf="checkDelete && numberOfChecked != 0">
+      {{ "delete" | translate }}
+    </button>
+
+    <button mat-button [hidden]="false" class="btnAdd btnAddUser" color="primary" type="button"
+      (click)="showModalImport()" *ngIf="checkImport">
+      <em class="fas fa-plus"></em> {{ "Import" | translate }}
+    </button>
+
+    <button mat-button color="primary" style="margin-left: 5px" class="button-search" (click)="onSubmit()">
+      <i nz-icon nzType="search"></i>{{ "search" | translate }}
+    </button>
+  </div>
+  <div class="data-table">
+    <nz-table #ajaxTable nzSize="small" nzShowSizeChanger [nzShowTotal]="rangeTemplate" [nzPageSizeOptions]="pageSize"
+      [nzFrontPagination]="false" [nzData]="users" [nzLoading]="loading" [nzTotal]="total" [(nzPageIndex)]="search.page"
+      [(nzPageSize)]="search.pageSize" (nzPageIndexChange)="searchData()" (nzPageSizeChange)="searchData(true)"
+      (nzCurrentPageDataChange)="currentPageDataChange($event)">
+      <thead>
+        <tr>
+          <th nzShowCheckbox nzLeft="0px" nzWidth="50px" [(nzChecked)]="isAllDisplayDataChecked"
+            [nzIndeterminate]="isIndeterminate" (nzCheckedChange)="checkAllRow($event)"></th>
+          <th class="text-nowrap" width="50px">#</th>
+          <th class="row-name text-nowrap">{{ "name" | translate }}</th>
+          <th class="row-username text-nowrap">{{ "username" | translate }}</th>
+          <th class="row-email text-nowrap">{{ "email" | translate }}</th>
+          <th class="row-mobile text-nowrap">{{ "mobile" | translate }}</th>
+          <th class="row-status text-nowrap">{{ "status" | translate }}</th>
+          <th class="row-group text-nowrap">{{ "group_name" | translate }}</th>
+          <th nzWidth="75px" nzRight="0px" class="row-actions text-nowrap" *ngIf="checkUpdate">
+            {{ "action" | translate }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of ajaxTable.data; let i = index">
+          <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.userId]" (nzCheckedChange)="refreshStatus()"
+            nzLeft="0px" nzWidth="50px"></td>
+          <td class="text-nowrap" width="50px">
+            {{ getRowIndex(i, ajaxTable.nzPageIndex, ajaxTable.nzPageSize) }}
+          </td>
+          <td class="row-name text-nowrap">{{ data.name }}</td>
+          <td class="row-username text-nowrap">{{ data.userName }}</td>
+          <td class="row-email text-nowrap">{{ data.email }}</td>
+          <td class="row-mobile text-nowrap">{{ data.phoneNumber }}</td>
+          <td class="row-status text-nowrap">
+            <nz-tag [nzColor]="'#ff0000'" *ngIf="data.status == 0">{{ getStatusUser(data.status) }}</nz-tag>
+            <nz-tag [nzColor]="'#108ee9'" *ngIf="data.status == 1">{{ getStatusUser(data.status) }}</nz-tag>
+            <nz-tag [nzColor]="'#0000ff'" *ngIf="data.status == 2">{{ getStatusUser(data.status) }}</nz-tag>
+          </td>
+          <td class="row-group text-nowrap">
+            <nz-tag [nzColor]="'#108ee9'" *ngIf="data.group!=null ">{{data.group.name}}</nz-tag>
+          </td>
+          <td nzWidth="75px" nzAlign="center" nzRight="0px" class="row-actions text-nowrap" *ngIf="checkUpdate">
+            <button nz-button nzType="link" class="button-update btn-icon" nz-tooltip nzTooltipPlacement="bottom"
+              nzTooltipTitle="{{'edit' | translate }}" (click)="showModal(data)" *ngIf="checkUpdate">
+              <i class="far fa-pencil-alt"></i>
+            </button>
+            <button mat-button nzType="link" class="button-update btn-icon" nz-tooltip nzTooltipPlacement="bottom"
+              nzTooltipTitle="{{'authen' | translate }}" (click)="showModalAuthen(data)" *ngIf="checkAuthen">
+              <i class="fas fa-user-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} {{ "of" | translate }} {{ total }}
+      {{ "items" | translate }}
+    </ng-template>
+  </div>
+  <div *ngIf="user != null || (roles.length > 0 && groups.length > 0)">
+    <app-update-user [isVisible]="isVisible" [user]="user" (data)="updateUser($event)"
+      (submitUpdate)="closeModalUpdate($event)" [groups]="groups"></app-update-user>
+  </div>
+  <div *ngIf="roles.length > 0 && groups.length > 0">
+    <app-add-user [isVisibleAdd]="isVisibleAdd" (dataAdd)="addUser($event)" (submitAdd)="closeModalAdd($event)"
+      [groupsAdd]="groups"></app-add-user>
+  </div>
+  <ng-container *ngIf="isVisibleRole">
+    <app-roles-user-modal (cancel)="closeModalAuthen($event)" [isVisibleRole]="isVisibleRole" [nodes]="nodes"
+      [defaultCheckedKeys]="defaultCheckedKeys" [user]="user" [titleModelRole]="'Phân quyền người dùng'">
+    </app-roles-user-modal>
+  </ng-container>
+  <app-user-import [isVisibleImport]="isVisibleImport" (modalState)="toggleModalImport($event)"></app-user-import>
+</div>

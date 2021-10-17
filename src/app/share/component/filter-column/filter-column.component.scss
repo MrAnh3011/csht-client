@@ -1,0 +1,8 @@
+::ng-deep label.ant-checkbox-group-item.ant-checkbox-wrapper.ng-star-inserted {
+  display: block;
+  margin-bottom: 10px;
+}
+::ng-deep nz-checkbox-group label:last-child {
+  margin-bottom: 0px !important;
+}
+
