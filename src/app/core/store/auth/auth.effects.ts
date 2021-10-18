@@ -17,9 +17,7 @@ export class AuthEffects {
 
   @Effect()
   login$: Observable<Action> = this.actions$.pipe(
-    ofType<authAction.Login>(
-      authAction.AuthActionTypes.Login
-    ),
+    ofType<authAction.Login>( authAction.AuthActionTypes.Login ),
     mergeMap((action: authAction.Login) =>
       this.authService.login(action.payload).pipe(
         map(
