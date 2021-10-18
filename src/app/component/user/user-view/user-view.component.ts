@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../user.service';
 import { User } from '../../../core/models/user.class';
 import { SearchUser, SearchUserParam } from '../../../core/models/searchUser.class';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { NotificationService } from '../../../core/services/notification.service';
 import { Constant } from '../../../share/constants/constant.class';
 import { LoaderService } from '../../../core/services/loader.service';
@@ -18,19 +18,26 @@ import { MenuService } from '../../menu/menu.service';
 import { Menu } from '../../../core/models/menu.class';
 import { MenuRoles } from '../../../core/models/menuRoles.class';
 import { UrlConstant } from '../../../share/constants/url.class';
-import { TableSelectionAbstract } from 'src/app/shared/component/table/table-selection.abstract';
+import { TableSelectionAbstract } from '../../../share/component/table/table-selection.abstract';
 import { ActionService } from '../../action/action.services';
 import { RoleService } from '../../role/role.service';
 import { GroupService } from '../../group/group.service';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss'],
+  templateUrl: './user-view.component.html',
+  styleUrls: ['./user-view.component.scss'],
 })
-export class UserViewComponent extends TableSelectionAbstract implements OnInit, OnDestroy {
+export class UserViewComponent extends TableSelectionAbstract implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   public readonly DOWNLOAD_REPORT_URL = UrlConstant.DETAIL_USER + UrlConstant.REPORT_USER;
   public readonly REPORT_NAME = Constant.REPORT_NAME;
+  dataSource = new MatTableDataSource<User>();
+  displayedColumns: string[] = ['select', '#', 'name', 'username', 'email', 'mobile', 'status', 'group_name', 'action'];
+  selection = new SelectionModel<User>(true, [])
 
   users: User[] = [];
   loading = false;
@@ -64,8 +71,8 @@ export class UserViewComponent extends TableSelectionAbstract implements OnInit,
 
   // Phân quyền
   isVisibleRole = false;
-  defaultSelectedKeys = [];
-  defaultCheckedKeys = [];
+  defaultSelectedKeys: any[] = [];
+  defaultCheckedKeys: any[] = [];
   // End Phân quyền
 
   constructor(
@@ -91,6 +98,9 @@ export class UserViewComponent extends TableSelectionAbstract implements OnInit,
       status: null,
       username: null,
     });
+  }
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
   ngOnInit(): void {

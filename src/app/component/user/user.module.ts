@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { UserViewComponent } from './user-view/user-view.component';
 import { UserRoutingModule } from './user-routing.module';
 import { UserService } from '../user/user.service';
@@ -20,10 +20,11 @@ import { UserUpdateComponent } from './user-update/user-update.component';
         UserUpdateComponent
     ],
     imports: [
-        UserRoutingModule,
         ShareModule,
+        UserRoutingModule,
     ],
-    providers: [UserService, DatePipe]
+    providers: [UserService, DatePipe],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
 export class UserModule {

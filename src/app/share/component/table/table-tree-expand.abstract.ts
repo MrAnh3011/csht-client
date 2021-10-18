@@ -19,7 +19,7 @@ export abstract class TableTreeExpandAbstract {
   collapse(array: any[], data: any, $event: boolean): void {
     if (!$event) {
       if (data[this.childrenProp]) {
-        data[this.childrenProp].forEach(d => {
+        data[this.childrenProp].forEach((d: any) => {
           const target = array.find(a => a[this.prop] === d[this.prop])!;
           this.mapOfExpandId[target[this.prop]] = false;
           this.collapse(array, target, false);

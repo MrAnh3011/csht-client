@@ -23,8 +23,8 @@ export abstract class TableSelectionAbstract implements TableSelectionInterface 
     });
   }
 
-  currentPageDataChange($event: any[]): void {
-    this.listOfDisplayData = $event;
+  currentPageDataChange($event: readonly any[]): void {
+    this.listOfDisplayData = $event as any[];
     this.refreshStatus();
   }
 
@@ -86,7 +86,7 @@ export abstract class TableSelectionAbstract implements TableSelectionInterface 
   }
 
   getCheckedIdList(searchText?: string, searchData?: any[]): number[] {
-    const listIds = [];
+    const listIds: number[] = [];
     let isChecked = false;
     Object.keys(this.mapOfCheckedId).forEach(key => {
       if (this.mapOfCheckedId[key]) {

@@ -1,8 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from './material.module';
 import { I18nModule } from './i18n.module';
-import { NgxScrollTopModule } from 'ngx-scrolltop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -35,14 +33,67 @@ import { NgxDateTimePickerComponent } from './component/ngx-date-time-picker/ngx
 import { ExportReportComponent } from './component/export-report/export-report.component';
 import { ErrorInterceptor } from './interceptor/error.interceptor';
 import { NotificationService } from '../core/services/notification.service';
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzModule } from './nz.module';
+import { MdePopoverModule} from '@material-extended/mde';
+import { MaterialModule } from './material.module';
+import { NgxScrollTopModule } from 'ngx-scrolltop';
 
 @NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    ScrollingModule,
+    DragDropModule,
+    I18nModule,
+    CKEditorModule,
+    EditorModule,
+    BsDatepickerModule,
+    TimepickerModule,
+    MdePopoverModule,
+    MaterialModule,
+    NgxScrollTopModule
+  ],
+  exports: [
+    CommonModule,
+    DateFormatPipe,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    I18nModule,
+    SelectLanguageComponent,
+    ScrollingModule,
+    DragDropModule,
+    CKEditorModule,
+    EditorModule,
+    ReportDownloadComponent,
+    ReportDownloadSelectionComponent,
+    IsNumberDirective,
+    CurrencyFormatPipe,
+    CurrencyFormatVNPipe,
+    MaskDateDirective,
+    TruncatePipe,
+    SanitizeHtmlPipe,
+    DownloadFileDirective,
+    ParseCurrencyViDirective,
+    ParseCurrencyDirective,
+    MaskTwoDecimalsDirective,
+    NumbericDirective,
+    FilterColumnTableComponent,
+    LoadingCustomComponent,
+    ExportButtonComponent,
+    UploadInputComponent,
+    UploadImageComponent,
+    NgxDateTimePickerComponent,
+    MdePopoverModule,
+    MaterialModule,
+    NzModule,
+    NgxScrollTopModule
+  ],
   declarations: [
     DateFormatPipe,
     SelectLanguageComponent,
-    ReportDownloadComponent,
-    ReportDownloadSelectionComponent,
     IsNumberDirective,
     CurrencyFormatPipe,
     CurrencyFormatVNPipe,
@@ -60,57 +111,9 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
     ExportButtonComponent,
     UploadInputComponent,
     UploadImageComponent,
-    NgxDateTimePickerComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    ScrollingModule,
-    DragDropModule,
-    I18nModule,
-    NgxScrollTopModule,
-    CKEditorModule,
-    EditorModule,
-    BsDatepickerModule,
-    TimepickerModule
-  ],
-  exports: [
-    CommonModule,
-    DateFormatPipe,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    I18nModule,
-    SelectLanguageComponent,
-    ScrollingModule,
-    DragDropModule,
-    CKEditorModule,
-    EditorModule,
-    MaterialModule,
-    I18nModule,
-    NzBreadCrumbModule,
-    NgxScrollTopModule,
+    NgxDateTimePickerComponent,
     ReportDownloadComponent,
     ReportDownloadSelectionComponent,
-    IsNumberDirective,
-    CurrencyFormatPipe,
-    CurrencyFormatVNPipe,
-    MaskDateDirective,
-    TruncatePipe,
-    SanitizeHtmlPipe,
-    DownloadFileDirective,
-    ParseCurrencyViDirective,
-    ParseCurrencyDirective,
-    MaskTwoDecimalsDirective,
-    NumbericDirective,
-    FilterColumnTableComponent,
-    LoadingCustomComponent,
-    ExportButtonComponent,
-    UploadInputComponent,
-    UploadImageComponent,
-    NgxDateTimePickerComponent
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

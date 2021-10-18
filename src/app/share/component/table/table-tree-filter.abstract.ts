@@ -41,7 +41,7 @@ export abstract class TableTreeFilterAbstract extends TableTreeSelectionAbstract
           return true;
         }
         if (node[this.childrenProp]) {
-          return (node[this.childrenProp] = node[this.childrenProp].filter(i => this.searchNode(i, searchText, name))).length;
+          return (node[this.childrenProp] = node[this.childrenProp].filter((i: any) => this.searchNode(i, searchText, name))).length;
         }
       }
 

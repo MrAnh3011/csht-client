@@ -7,9 +7,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ExportButtonComponent implements OnInit {
   @Input() method: string;
   @Input() url: string;
-  @Input() data = null;
+  @Input() data: any = null;
   @Input() fileName: string;
-  @Input() params = null;
+  @Input() params: any = null;
 
   isDownloading: boolean;
 

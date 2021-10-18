@@ -7,6 +7,7 @@ import { ServerErrorComponent } from './server-error/server-error.component';
 import { AuthService } from './auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShareModule } from 'src/app/share/share.module';
+import {StoreModule} from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { ShareModule } from 'src/app/share/share.module';
   imports: [
     ReactiveFormsModule,
     AuthRoutingModule,
-    ShareModule
+    ShareModule,
   ],
   providers: [AuthService]
 

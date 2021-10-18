@@ -26,7 +26,7 @@
           <div class="input-wrap">
             <label class="title-detail">{{ "group" | translate }}</label>
             <mat-select formControlName="groupId">
-              <mat-option *ngFor="let option of groups" value="option.groupId">{{option.groupName}}</mat-option>
+              <mat-option *ngFor="let option of groups" value="option.groupId">{{option.name}</mat-option>
             </mat-select>
           </div>
         </div>
@@ -74,58 +74,66 @@
     </button>
   </div>
   <div class="data-table">
-    <nz-table #ajaxTable nzSize="small" nzShowSizeChanger [nzShowTotal]="rangeTemplate" [nzPageSizeOptions]="pageSize"
-      [nzFrontPagination]="false" [nzData]="users" [nzLoading]="loading" [nzTotal]="total" [(nzPageIndex)]="search.page"
-      [(nzPageSize)]="search.pageSize" (nzPageIndexChange)="searchData()" (nzPageSizeChange)="searchData(true)"
-      (nzCurrentPageDataChange)="currentPageDataChange($event)">
-      <thead>
-        <tr>
-          <th nzShowCheckbox nzLeft="0px" nzWidth="50px" [(nzChecked)]="isAllDisplayDataChecked"
-            [nzIndeterminate]="isIndeterminate" (nzCheckedChange)="checkAllRow($event)"></th>
-          <th class="text-nowrap" width="50px">#</th>
-          <th class="row-name text-nowrap">{{ "name" | translate }}</th>
-          <th class="row-username text-nowrap">{{ "username" | translate }}</th>
-          <th class="row-email text-nowrap">{{ "email" | translate }}</th>
-          <th class="row-mobile text-nowrap">{{ "mobile" | translate }}</th>
-          <th class="row-status text-nowrap">{{ "status" | translate }}</th>
-          <th class="row-group text-nowrap">{{ "group_name" | translate }}</th>
-          <th nzWidth="75px" nzRight="0px" class="row-actions text-nowrap" *ngIf="checkUpdate">
-            {{ "action" | translate }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of ajaxTable.data; let i = index">
-          <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.userId]" (nzCheckedChange)="refreshStatus()"
-            nzLeft="0px" nzWidth="50px"></td>
-          <td class="text-nowrap" width="50px">
-            {{ getRowIndex(i, ajaxTable.nzPageIndex, ajaxTable.nzPageSize) }}
-          </td>
-          <td class="row-name text-nowrap">{{ data.name }}</td>
-          <td class="row-username text-nowrap">{{ data.userName }}</td>
-          <td class="row-email text-nowrap">{{ data.email }}</td>
-          <td class="row-mobile text-nowrap">{{ data.phoneNumber }}</td>
-          <td class="row-status text-nowrap">
-            <nz-tag [nzColor]="'#ff0000'" *ngIf="data.status == 0">{{ getStatusUser(data.status) }}</nz-tag>
-            <nz-tag [nzColor]="'#108ee9'" *ngIf="data.status == 1">{{ getStatusUser(data.status) }}</nz-tag>
-            <nz-tag [nzColor]="'#0000ff'" *ngIf="data.status == 2">{{ getStatusUser(data.status) }}</nz-tag>
-          </td>
-          <td class="row-group text-nowrap">
-            <nz-tag [nzColor]="'#108ee9'" *ngIf="data.group!=null ">{{data.group.name}}</nz-tag>
-          </td>
-          <td nzWidth="75px" nzAlign="center" nzRight="0px" class="row-actions text-nowrap" *ngIf="checkUpdate">
-            <button nz-button nzType="link" class="button-update btn-icon" nz-tooltip nzTooltipPlacement="bottom"
-              nzTooltipTitle="{{'edit' | translate }}" (click)="showModal(data)" *ngIf="checkUpdate">
-              <i class="far fa-pencil-alt"></i>
-            </button>
-            <button mat-button nzType="link" class="button-update btn-icon" nz-tooltip nzTooltipPlacement="bottom"
-              nzTooltipTitle="{{'authen' | translate }}" (click)="showModalAuthen(data)" *ngIf="checkAuthen">
-              <i class="fas fa-user-alt"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </nz-table>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="checkAllRow($event === null)" [checked]="isAllDisplayDataChecked"
+            [indeterminate]="isIndeterminate">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="refreshStatus()"
+            [checked]="mapOfCheckedId[data.userId]">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef> # </th>
+        <th mat-cell *matCellDef="let element"> # </th>
+      </ng-container>
+
+      <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef> {{ "name" | translate }} </th>
+        <th mat-cell *matCellDef="let element"> {{element.name}} </th>
+      </ng-container>
+
+      <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef> {{ "username" | translate }} </th>
+        <th mat-cell *matCellDef="let element"> {{element.username}} </th>
+      </ng-container>
+
+      <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef> {{ "email" | translate }} </th>
+        <th mat-cell *matCellDef="let element"> {{element.email}} </th>
+      </ng-container>
+
+      <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef> {{ "mobile" | translate }} </th>
+        <th mat-cell *matCellDef="let element"> {{element.mobile}} </th>
+      </ng-container>
+
+      <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef> {{ "status" | translate }} </th>
+        <th mat-cell *matCellDef="let element"> {{element.status}} </th>
+      </ng-container>
+
+      <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef> {{ "group_name" | translate }} </th>
+        <th mat-cell *matCellDef="let element"> {{element.group_name}} </th>
+      </ng-container>
+
+      <ng-container matColumnDef="#" *ngIf="checkUpdate">
+        <th mat-header-cell *matHeaderCellDef> {{ "action" | translate }} </th>
+        <th mat-cell *matCellDef="let element"> {{element.action}} </th>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+      </tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
     <ng-template #rangeTemplate let-range="range" let-total>
       {{ range[0] }}-{{ range[1] }} {{ "of" | translate }} {{ total }}
       {{ "items" | translate }}
@@ -144,5 +152,5 @@
       [defaultCheckedKeys]="defaultCheckedKeys" [user]="user" [titleModelRole]="'Phân quyền người dùng'">
     </app-roles-user-modal>
   </ng-container>
-  <app-user-import [isVisibleImport]="isVisibleImport" (modalState)="toggleModalImport($event)"></app-user-import>
+  <app-user-import [isVisibleImport]="isVisibleImport" (modalState)="toggleModalImport($event === null)"></app-user-import>
 </div>

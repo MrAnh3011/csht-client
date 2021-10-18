@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Constant } from '../share/constants/constant.class';
 import * as fromAuth from '../core/store/auth/auth.reducer';

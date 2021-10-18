@@ -8,6 +8,7 @@ export class EntityDto {
   status: number;
   strStatus: string;
   adRoles: Role[];
+  createdDate: Date;
 }
 
 export class EntityAddModel {

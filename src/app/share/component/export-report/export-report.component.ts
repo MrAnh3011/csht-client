@@ -12,12 +12,12 @@ export class ExportReportComponent implements OnInit {
   @Output() downloadEvent: EventEmitter<any> = new EventEmitter<boolean>();
   @Input() method: string;
   @Input() url: string;
-  @Input() data = null;
+  @Input() data: any = null;
   @Input() format: string;
   @Input() fileName: string;
   @Input() title: string;
   @Input() icon: string;
-  @Input() params = null;
+  @Input() params: any = null;
 
   type: string;
 

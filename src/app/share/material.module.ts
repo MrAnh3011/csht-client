@@ -19,50 +19,38 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTableModule } from '@angular/material/table';
+
+const modules = [
+  MatButtonModule,
+  MatToolbarModule,
+  MatSelectModule,
+  MatTabsModule,
+  MatInputModule,
+  MatProgressSpinnerModule,
+  MatChipsModule,
+  MatSidenavModule,
+  MatCheckboxModule,
+  MatCardModule,
+  MatListModule,
+  MatIconModule,
+  MatTooltipModule,
+  MatSnackBarModule,
+  MatSlideToggleModule,
+  MatDividerModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatMenuModule,
+  MatTableModule
+];
 
 @NgModule({
   declarations: [],
   imports: [
-    MatButtonModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatSelectModule,
-    MatTabsModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatChipsModule,
-    MatSidenavModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatListModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatSlideToggleModule,
-    MatDividerModule,
-    MatDatepickerModule,
-    MatNativeDateModule
+    ...modules
   ],
   exports: [
-    MatButtonModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatSelectModule,
-    MatTabsModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatChipsModule,
-    MatSidenavModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatListModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatSlideToggleModule,
-    MatDividerModule,
-    MatDatepickerModule,
-    MatNativeDateModule
+    ...modules
   ]
 })
-export class MaterialModule {}
+export class MaterialModule { }

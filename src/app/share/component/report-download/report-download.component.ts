@@ -12,7 +12,7 @@ export interface ReportData {
 @Component({
   selector: 'report-download',
   template: `
-  <a (click)="downloadFile()"><i mat-icon type="icon"></i> {{ this.title }}</a> `,
+  <a (click)="downloadFile()"><mat-icon>download</mat-icon> {{ this.title }}</a> `,
   styleUrls: ['./report-download.component.scss']
 })
 export class ReportDownloadComponent implements OnInit, OnDestroy {

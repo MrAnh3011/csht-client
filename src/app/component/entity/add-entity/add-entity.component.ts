@@ -1,9 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Action} from '../../../model/action.model';
-import {NotificationService} from '../../../service/notification.service';
-import {EntityService} from "../../../service/entity.service";
-import {EntityAddModel} from "../../../model/entity.class";
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from '../../../core/services/notification.service';
+import { EntityService } from "../entity.service";
+import { EntityAddModel } from "../../../core/models/entity.class";
 
 @Component({
   selector: 'app-add-entity',
@@ -37,6 +36,7 @@ export class AddEntityComponent implements OnInit {
     }
   }
 
+
   handleOk() {
     this.submitted = true;
     this.isVisibleAdd = true;
@@ -50,7 +50,7 @@ export class AddEntityComponent implements OnInit {
         this.submitAdd.emit(this.isVisibleAdd);
         this.submitted = false;
         this.formAdd.reset();
-      }, (error: any) => {
+      }, error => {
         this.loading = false;
         this.notificationService.showMessage('error', error.error.message);
       })
@@ -67,5 +67,4 @@ export class AddEntityComponent implements OnInit {
   get f() {
     return this.formAdd.controls;
   }
-
 }

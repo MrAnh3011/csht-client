@@ -1,7 +1,7 @@
 export class CurrencyRead {
   static numbTextArray = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín'];
 
-  static currencyRead(numb) {
+  static currencyRead(numb: number) {
     if (numb === 0) {
       return this.numbTextArray[0];
     }
@@ -22,7 +22,7 @@ export class CurrencyRead {
     return textRead === '' ? textRead : textRead + ' đồng.';
   }
 
-  static dozensRead(numb, full) {
+  static dozensRead(numb: number, full: any) {
     let str = '';
     const dozens = Math.floor(numb / 10);
     const unit = numb % 10;
@@ -48,7 +48,7 @@ export class CurrencyRead {
     return str;
   }
 
-  static docblock(numb, full) {
+  static docblock(numb: number, full: any) {
     let str = '';
     const hundred = Math.floor(numb / 100);
     numb = numb % 100;
@@ -61,7 +61,7 @@ export class CurrencyRead {
     return str;
   }
 
-  static millionRead(numb, full) {
+  static millionRead(numb: number, full: any) {
     let str = '';
     const million = Math.floor(numb / 1000000);
     numb = numb % 1000000;

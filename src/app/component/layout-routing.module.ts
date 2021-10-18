@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutComponent } from './main-layout.component';
 import { ActionComponent } from './action/action.component';
 import { ViewEntityComponent } from "./entity/view-entity/view-entity.component";
+import { WelcomeComponent } from './welcome/welcome.component';
 
 
 const routes: Routes = [
@@ -33,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: 'group',
-        loadChildren: () => import('../group/group.module').then(m => m.GroupModule),
+        loadChildren: () => import('./group/group.module').then(m => m.GroupModule),
         data: {
           pagename: 'groups_page_name',
           breadcrumb: 'Groups'
@@ -41,7 +42,7 @@ const routes: Routes = [
       },
       {
         path: 'menu',
-        loadChildren: () => import('../menu/menu.module').then(m => m.MenuModule),
+        loadChildren: () => import('./menu/menu.module').then(m => m.MenuModule),
         data: {
           pagename: 'menus_page_name',
           breadcrumb: 'Menus'
@@ -57,7 +58,7 @@ const routes: Routes = [
       },
       {
         path: 'welcome',
-        loadChildren: () => import('../../shared/component/page-default/page-default.module').then(s => s.PageDefaultModule),
+        loadChildren: () => import('../share/component/page-default/page-default.module').then(s => s.PageDefaultModule),
         data: {
           pagename: 'welcome',
           breadcrumb: 'Welcome'
@@ -65,7 +66,7 @@ const routes: Routes = [
       },
       {
         path: 'entities',
-        component: EntityComponent,
+        component: ViewEntityComponent,
         data: {
           pagename: 'page_name.entity',
           breadcrumb: 'Entities'

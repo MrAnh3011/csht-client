@@ -1,19 +1,17 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { registerLocaleData } from '@angular/common';
-import vi from '@angular/common/locales/vi';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { AppConfigService } from './core/services/app-config.service';
 import { ShareModule } from './share/share.module';
-import { NZ_I18N } from 'ng-zorro-antd/i18n';
-import { en_US } from 'ng-zorro-antd/i18n';
-import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import vi from '@angular/common/locales/vi';
+import { LayoutModule } from '@angular/cdk/layout';
+import { AuthModule } from './component/auth/auth.module';
+import { PageDefaultModule } from './share/component/page-default/page-default.module';
 
 registerLocaleData(vi);
 
@@ -22,16 +20,19 @@ registerLocaleData(vi);
     AppComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ShareModule,
+    LayoutModule,
+    AuthModule,
     FormsModule,
     HttpClientModule,
-    NzLayoutModule,
-    NzMenuModule
+    PageDefaultModule,
+    ShareModule,
   ],
-  providers: [AppConfigService, { provide: NZ_I18N, useValue: en_US }],
-  bootstrap: [AppComponent]
+  providers: [AppConfigService],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

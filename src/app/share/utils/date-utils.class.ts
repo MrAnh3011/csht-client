@@ -1,9 +1,9 @@
 export class DateUtils {
-  static isLeapYear(year) {
+  static isLeapYear(year: number) {
     return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0));
   }
 
-  static getDaysInMonth(year, month) {
+  static getDaysInMonth(year: number, month: number) {
     return [31, (this.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
   }
 
@@ -16,7 +16,7 @@ export class DateUtils {
     return dateAfter;
   }
 
-  static checkRangeDate(fromDateCheck, toDateCheck, fromDate, toDate): any {
+  static checkRangeDate(fromDateCheck: any, toDateCheck: any, fromDate: any, toDate: any): any {
     if (!fromDate || !toDate) {
       return false;
     }

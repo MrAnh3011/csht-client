@@ -1,10 +1,8 @@
-<button class="btn-export"
-nz-button nz-dropdown
-[nzLoading] = "isDownloading"
-[nzDisabled] ="isDownloading"
-[nzDropdownMenu]="menu"><i nz-icon nzType="printer" nzTheme="fill"></i>
-<i nz-icon nzType="down"></i></button>
-<nz-dropdown-menu #menu="nzDropdownMenu" >
+<button class="btn-export" mat-button [matMenuTriggerFor]="menu">
+  <mat-icon>print</mat-icon>
+  <mat-icon>expand_more</mat-icon>
+</button>
+<mat-menu #menu="matMenu" >
   <ul nz-menu>
     <li nz-menu-item >
       <app-export-report
@@ -20,4 +18,4 @@ nz-button nz-dropdown
       </app-export-report>
     </li>
   </ul>
-</nz-dropdown-menu>
+</mat-menu>

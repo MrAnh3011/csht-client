@@ -50,7 +50,7 @@ export abstract class TableTreeSelectionAbstract extends TableTreeExpandAbstract
     });
 
     target.forEach(element => {
-      if (element[this.childrenProp].some(el => this.mapOfCheckedId[el[this.prop]])) {
+      if (element[this.childrenProp].some((el: any) => this.mapOfCheckedId[el[this.prop]])) {
         this.mapOfIndeterminateId[element[this.prop]]  = true;
       } else {
         this.mapOfIndeterminateId[element[this.prop]]  = false;
@@ -97,8 +97,7 @@ export abstract class TableTreeSelectionAbstract extends TableTreeExpandAbstract
   }
 
   getCheckedIdList(searchText?: string, searchData?: any[]): number[] {
-    const listIds = [];
-    // let isChecked = false;
+    const listIds: number[] = [];
 
     Object.keys(this.mapOfCheckedId).forEach(key => {
       if (this.mapOfCheckedId[key]) {
@@ -106,21 +105,6 @@ export abstract class TableTreeSelectionAbstract extends TableTreeExpandAbstract
         // isChecked = true;
       }
     });
-
-    // if (searchData !== undefined
-    //   && searchText !== undefined
-    //   && (searchText.trim()).length > 0
-    //   && !isChecked
-    // ) {
-    //   searchData.forEach((item) => function f(item: any) {
-    //     listIds.push(item[this.prop]);
-    //     if (item[this.childrenProp]) {
-    //       item[this.childrenProp].forEach(i => {
-    //         f(i);
-    //       });
-    //     }
-    //   });
-    // }
     return listIds;
   }
 }

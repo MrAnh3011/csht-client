@@ -60,11 +60,11 @@
             <div class="col-4 col-md-4"><a class="logo-a-mobile" [routerLink]="['/user']"><img
                   src="assets/image/logo.png" class="image logo-responsive"></a></div>
             <div class="col-4 col-md-2 text-right">
-              <div class="dropdown-toggle header-icon" [matMenuTriggerFor]="menu">
+              <button class="dropdown-toggle header-icon" [matMenuTriggerFor]="menu">
                 <div mat-card-avatar src="avatarUrl"></div>
                 <span class="d-none d-sm-inline-block" style="width: 5px;"></span>
                 <span class="d-none d-sm-inline-block user-info">{{name}}</span>
-              </div>
+              </button>
               <mat-menu #menu="matMenu">
                 <button mat-menu-item routerLink="/user/profile"><i class="fal fa-user"
                     style="margin-right: 5px;"></i>&nbsp;{{ 'profile' | translate }}> </button>
@@ -86,7 +86,7 @@
             </nz-breadcrumb-item>
           </nz-breadcrumb>
           <div class="group-inner-content">
-            <router-outlet></router-outlet>
+            <router-outlet></router-outlet> -->
           </div>
         </div>
         <footer>OSS</footer>

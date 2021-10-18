@@ -1,10 +1,8 @@
-<button class="btn-export"
-nz-button nz-dropdown
-[nzLoading] = "isDownloading"
-[nzDisabled] ="isDownloading"
-[nzDropdownMenu]="menu"><i nz-icon nzType="download"></i> {{ 'export_report' | translate }} {{ isDownloading }}
-<i nz-icon nzType="down"></i></button>
-<nz-dropdown-menu #menu="nzDropdownMenu" >
+<button mat-button class="btn-export" [matMenuTriggerFor]="menu">
+  <mat-icon>download</mat-icon> {{ 'export_report' | translate }} {{ isDownloading }}
+  <mat-icon>expand_more</mat-icon>
+</button>
+<mat-menu #menu="matMenu" >
   <ul nz-menu>
     <li nz-menu-item >
       <report-download
@@ -38,4 +36,4 @@ nz-button nz-dropdown
       </report-download>
     </li>
   </ul>
-</nz-dropdown-menu>
+</mat-menu>
