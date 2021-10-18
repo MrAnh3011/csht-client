@@ -1,5 +1,5 @@
 import { TranslateService } from '@ngx-translate/core';
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
@@ -10,17 +10,17 @@ export class FilterColumnService {
 
   constructor(
     private translate: TranslateService
-  ) {}
+  ) { }
 
-  getDisplayColumn(storageKey: string, displayColumn: { label: string, checked: boolean, disabled: boolean}[]): any[] {
+  getDisplayColumn(storageKey: string, displayColumn: { name: string, completed: boolean, disabled: boolean }[]): any[] {
     const displayColumnStorage = localStorage.getItem(storageKey);
     if (displayColumnStorage) {
       displayColumn = JSON.parse(displayColumnStorage);
     } else {
-      const keys = displayColumn.map((item) =>  item.label);
+      const keys = displayColumn.map((item) => item.name);
       this.translate.get(keys).subscribe(res => {
         displayColumn.forEach((item) => {
-          item.label = res[item.label];
+          item.name = res[item.name];
         });
         localStorage.setItem(storageKey, JSON.stringify(displayColumn));
       });

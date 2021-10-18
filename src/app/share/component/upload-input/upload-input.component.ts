@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UploadFile } from 'ng-zorro-antd/upload';
+// import { UploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
   selector: 'app-upload-input',
@@ -18,7 +18,7 @@ export class UploadInputComponent implements OnInit {
   fileAttr = 'Choose File';
 
   public fileList: File[] = [];
-  public fileUrl: string = null;
+  public fileUrl: string = '';
   loading = false;
 
   constructor() { }
@@ -37,7 +37,7 @@ export class UploadInputComponent implements OnInit {
   remove = (file: File): boolean => {
     console.log("remove");
     this.fileList = [];
-    this.fileUrl = null;
+    this.fileUrl = '';
     return false;
 
   }

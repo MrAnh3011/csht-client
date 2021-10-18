@@ -18,7 +18,7 @@ export class MaskDateDirective {
     this.localeService.use('vi');
   }
 
-  @HostListener('keypress', ['$event']) onKeypressInput(event) {
+  @HostListener('keypress', ['$event']) onKeypressInput(event: any) {
     const len = this._el.nativeElement.value.length;
     if (event.keyCode < 47 || event.keyCode > 57 || len === 10) {
       event.preventDefault();

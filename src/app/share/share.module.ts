@@ -35,6 +35,7 @@ import { NgxDateTimePickerComponent } from './component/ngx-date-time-picker/ngx
 import { ExportReportComponent } from './component/export-report/export-report.component';
 import { ErrorInterceptor } from './interceptor/error.interceptor';
 import { NotificationService } from '../core/services/notification.service';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { NotificationService } from '../core/services/notification.service';
     EditorModule,
     MaterialModule,
     I18nModule,
+    NzBreadCrumbModule,
     NgxScrollTopModule,
     ReportDownloadComponent,
     ReportDownloadSelectionComponent,

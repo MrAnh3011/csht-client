@@ -14,7 +14,7 @@ export class NumberUtils {
     if (value) {
       return Number(value.toString().replace(/,/g, ''));
     }
-    return null;
+    return null!;
   }
 
   static currencyFormatVN(value: any) {
@@ -29,7 +29,7 @@ export class NumberUtils {
     if (value) {
       return Number(value.toString().split('.').join(''));
     }
-    return null;
+    return null!;
   }
 
 }

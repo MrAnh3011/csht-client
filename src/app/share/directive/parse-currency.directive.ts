@@ -17,6 +17,6 @@ export class ParseCurrencyDirective {
     this._el.nativeElement.value = this.formatterCurrency(this._el.nativeElement.value.split(',').join(''));
   }
 
-  formatterCurrency = (value) => value ? NumberUtils.currencyFormat(value) : null;
+  formatterCurrency = (value: any) => value ? NumberUtils.currencyFormat(value) : null;
 
 }

@@ -22,7 +22,7 @@ export class NumbericDirective {
         }
     }
 
-    private run(oldValue) {
+    private run(oldValue: any) {
         setTimeout(() => {
             const currentValue: string = this.el.nativeElement.value;
             if (currentValue !== '' && !this.check(currentValue)) {
