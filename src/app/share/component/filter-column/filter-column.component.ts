@@ -1,4 +1,4 @@
-import { FilterColumnService } from 'src/app/service/shared-service/colum-filter.service';
+import { FilterColumnService } from '../../../core/services/colum-filter.service';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -21,7 +21,7 @@ export class FilterColumnTableComponent implements OnInit {
   }
 
   changeColumnFilter() {
-      localStorage.setItem(this.storageKey, JSON.stringify(this.displayColumn));
-      this.filterColumn.notifyChange();
+    localStorage.setItem(this.storageKey, JSON.stringify(this.displayColumn));
+    this.filterColumn.notifyChange();
   }
 }

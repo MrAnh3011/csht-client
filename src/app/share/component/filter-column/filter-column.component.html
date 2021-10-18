@@ -1,5 +1,10 @@
 <div class="popover-filter-column" style="width: 300px;">
   <div class="row col-md-12">
-    <nz-checkbox-group [(ngModel)]="displayColumn"  (ngModelChange)="changeColumnFilter()"></nz-checkbox-group>
+    <ul>
+      <li *ngFor="let subCol of displayColumn">
+        <mat-checkbox [(ngModel)]="subCol.completed" [disabled]= "subCol.disabled">{{subCol.name}}</mat-checkbox>
+      </li>
+    </ul>
+    <!-- <nz-checkbox-group [(ngModel)]="displayColumn"  (ngModelChange)="changeColumnFilter()"></nz-checkbox-group> -->
   </div>
 </div>
