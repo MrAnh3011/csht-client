@@ -12,6 +12,12 @@ import vi from '@angular/common/locales/vi';
 import { LayoutModule } from '@angular/cdk/layout';
 import { AuthModule } from './component/auth/auth.module';
 import { PageDefaultModule } from './share/component/page-default/page-default.module';
+import { EntityModule } from './component/entity/entity.module';
+import { GroupModule } from './component/group/group.module';
+import { MenuModule } from './component/menu/menu.module';
+import { RoleModule } from './component/role/role.module';
+import { UserModule } from './component/user/user.module';
+import { DynamicModule } from './component/dynamic-component/dynamic.module';
 
 registerLocaleData(vi);
 
@@ -20,16 +26,23 @@ registerLocaleData(vi);
     AppComponent
   ],
   imports: [
-    CommonModule,
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
     BrowserAnimationsModule,
+    ShareModule,
     LayoutModule,
+    EntityModule,
+    GroupModule,
+    MenuModule,
+    RoleModule,
+    UserModule,
     AuthModule,
     FormsModule,
+    PageDefaultModule,
     HttpClientModule,
     PageDefaultModule,
-    ShareModule,
+    DynamicModule
   ],
   providers: [AppConfigService],
   bootstrap: [AppComponent],

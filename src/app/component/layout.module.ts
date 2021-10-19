@@ -15,9 +15,9 @@ import { WelcomeComponent } from './welcome/welcome.component';
     WelcomeComponent
   ],
   imports: [
+    LayoutRoutingModule,
     ShareModule,
     RouterModule.forChild([]),
-    LayoutRoutingModule,
     EntityModule
   ],
   exports: [

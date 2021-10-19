@@ -1,0 +1,10 @@
+<h2>Edit Data</h2>
+<mat-dialog-content [formGroup]="form">
+    <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form">
+    </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button" (click) = "CloseDialog()">Close</button>
+    <button class="mat-raised-button mat-primary" (click) = "SaveDialog()">Save</button>
+</mat-dialog-actions>

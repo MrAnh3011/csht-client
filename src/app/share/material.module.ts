@@ -20,6 +20,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const modules = [
   MatButtonModule,
@@ -41,7 +42,8 @@ const modules = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatMenuModule,
-  MatTableModule
+  MatTableModule,
+  MatDialogModule
 ];
 
 @NgModule({

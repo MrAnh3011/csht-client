@@ -1,9 +1,9 @@
 {
   "api": {
-    "baseUrl": "http://127.0.0.1:8901",
-    "partnerUrl": "https://sandboxpay.vnptmedia.vn/cms-partner-api",
-    "assetCDNUrl": "https://sandboxpay.vnptmedia.vn/cms-bss-img",
-    "ossUserUrl": "http://127.0.0.1:8901",
+    "baseUrl": "http://10.155.136.124:8101",
+    "partnerUrl": "",
+    "assetCDNUrl": "",
+    "ossUserUrl": "http://10.155.136.124:8101",
     "casUrl": "https://id.vnpt.com.vn/cas/login?service=http://localhost:4200/"
   },
   "pageSize": [

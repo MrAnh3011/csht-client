@@ -1,0 +1,20 @@
+<h2 style="text-align: center">Angular Project</h2>
+<app-dynamic-show [fields]="formData" (submit)="submit($event)"></app-dynamic-show>
+<br>
+<br>
+<br>
+<!-- <div>{{returnData|json}}</div> -->
+<table mat-table [dataSource]="returnData" class="mat-elevation-z8 demo-table">
+  <ng-container *ngFor="let item of formDataVal" [matColumnDef]="item.name">
+    <th mat-header-cell *matHeaderCellDef>{{item.label}}</th>
+    <td mat-cell *matCellDef="let element">{{element[item.name]}}</td>
+  </ng-container>
+  <ng-container matColumnDef="modification">
+    <th mat-header-cell *matHeaderCellDef >Modification</th>
+    <td mat-cell *matCellDef="let element" > 
+      <button mat-icon-button (click) = 'openDialog(element)'><mat-icon style="color: darkorange">edit</mat-icon></button>
+      <button mat-icon-button (click) = 'deleteElement(element)'><mat-icon style="color: crimson;">delete</mat-icon></button>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

@@ -37,6 +37,11 @@ import { NzModule } from './nz.module';
 import { MdePopoverModule} from '@material-extended/mde';
 import { MaterialModule } from './material.module';
 import { NgxScrollTopModule } from 'ngx-scrolltop';
+import { ButtonComponent } from './component/dynamic-component/button/button.component';
+import { DateComponent } from './component/dynamic-component/datetime/datetime.component';
+import { InputComponent } from './component/dynamic-component/input/input.component';
+import { select } from '@ngrx/store';
+import { SelectComponent } from './component/dynamic-component/select/select.component';
 
 @NgModule({
   imports: [
@@ -114,6 +119,10 @@ import { NgxScrollTopModule } from 'ngx-scrolltop';
     NgxDateTimePickerComponent,
     ReportDownloadComponent,
     ReportDownloadSelectionComponent,
+    ButtonComponent,
+    DateComponent,
+    InputComponent,
+    SelectComponent
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -20,8 +20,8 @@ import { UserUpdateComponent } from './user-update/user-update.component';
         UserUpdateComponent
     ],
     imports: [
-        ShareModule,
         UserRoutingModule,
+        ShareModule,
     ],
     providers: [UserService, DatePipe],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
