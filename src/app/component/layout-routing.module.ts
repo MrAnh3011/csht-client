@@ -9,11 +9,6 @@ import { WelcomeComponent } from './welcome/welcome.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/welcome',
-    pathMatch: 'full'
-  },
-  {
-    path: '',
     component: MainLayoutComponent,
     children: [
       {
@@ -58,7 +53,7 @@ const routes: Routes = [
       },
       {
         path: 'welcome',
-        loadChildren: () => import('../share/component/page-default/page-default.module').then(s => s.PageDefaultModule),
+        component: WelcomeComponent,
         data: {
           pagename: 'welcome',
           breadcrumb: 'Welcome'
@@ -72,6 +67,7 @@ const routes: Routes = [
           breadcrumb: 'Entities'
         }
       },
+      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     ]
   },
 ];

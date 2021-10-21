@@ -1,34 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './component/auth/login/login.component';
+import { AuthorizedComponent } from './component/auth/authorized/authorized.component';
+import { PageNotFoundComponent } from './component/auth/page-not-found/page-not-found.component';
+import { MainLayoutComponent } from './component/main-layout.component';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
+    path: 'home',
+    loadChildren: () => import('./component/layout.module').then(m => m.LayoutModule),
+    data: { breadcrumb: 'Home' }
   },
-  {
-    path: '',
-    component: LoginComponent,
-    children: [
-      {
-        path: 'layout',
-        loadChildren: () => import('./component/layout.module').then(m => m.LayoutModule),
-      },
-      {
-        path: 'login',
-        loadChildren: () => import('./component/auth/auth.module').then(m => m.AuthModule)
-      }
-    ],
-    data: {
-      breadcrumb: 'Home',
-    }
+  { 
+    path: 'login',
+    loadChildren: () => import('./component/auth/auth.module').then (m => m.AuthModule)
   },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {enableTracing: true})],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

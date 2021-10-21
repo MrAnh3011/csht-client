@@ -41,5 +41,6 @@ export class AuthGuard implements CanLoad, CanActivate {
   static checkRole(role: string): boolean {
     const roles = JSON.parse(localStorage.getItem(Constant.CACHE_KEY.ROLES) as string);
     return roles.includes(role);
+    
   }
 }

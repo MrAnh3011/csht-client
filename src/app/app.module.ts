@@ -9,21 +9,21 @@ import { ShareModule } from './share/share.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import vi from '@angular/common/locales/vi';
-import { LayoutModule } from '@angular/cdk/layout';
-import { AuthModule } from './component/auth/auth.module';
-import { PageDefaultModule } from './share/component/page-default/page-default.module';
-import { EntityModule } from './component/entity/entity.module';
-import { GroupModule } from './component/group/group.module';
-import { MenuModule } from './component/menu/menu.module';
-import { RoleModule } from './component/role/role.module';
-import { UserModule } from './component/user/user.module';
 import { DynamicModule } from './component/dynamic-component/dynamic.module';
+import { StoreModule } from '@ngrx/store';
+import { UserService } from './component/user/user.service';
+import { MenuService } from './component/menu/menu.service';
+import { AuthService } from './component/auth/auth.service';
+import { AuthGuard } from './share/guards/auth.guard';
+import { ActionService } from './component/action/action.services';
+import { RoleService } from './component/role/role.service';
+import { GroupService } from './component/group/group.service';
 
 registerLocaleData(vi);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,20 +31,21 @@ registerLocaleData(vi);
     CommonModule,
     BrowserAnimationsModule,
     ShareModule,
-    LayoutModule,
-    EntityModule,
-    GroupModule,
-    MenuModule,
-    RoleModule,
-    UserModule,
-    AuthModule,
     FormsModule,
-    PageDefaultModule,
     HttpClientModule,
-    PageDefaultModule,
-    DynamicModule
+    DynamicModule,
+    StoreModule.forRoot({}),
   ],
-  providers: [AppConfigService],
+  providers: [
+    AppConfigService, 
+    UserService, 
+    MenuService, 
+    AuthService, 
+    ActionService,
+    RoleService,
+    GroupService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

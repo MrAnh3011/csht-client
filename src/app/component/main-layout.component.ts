@@ -78,6 +78,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('done to here');
     const userInfo = JSON.parse(localStorage.getItem(Constant.CACHE_KEY.USER_INFO) || '');
     this.username = userInfo.userName;
     this.name = userInfo.name;
