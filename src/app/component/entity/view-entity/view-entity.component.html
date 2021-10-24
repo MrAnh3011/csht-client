@@ -5,23 +5,18 @@
           <div class="col-md-4">
             <div class="input-wrap">
               <label class="title-detail">{{ "name" | translate }}</label>
-              <input nz-input formControlName="name" nzSize="default" (keyup.enter)="filterEntity()"/>
+              <input matInput formControlName="name" (keyup.enter)="filterEntity()"/>
             </div>
           </div>
           <div class="col-md-4">
             <div class="input-wrap">
               <label class="title-detail">{{ "status" | translate }}</label>
-              <nz-select
-                nzShowSearch
-                nzAllowClear
-                nzPlaceHolder=""
-                nzSize="default"
-                formControlName="status">
-                <nz-option nzLabel="Hoạt động" nzValue="1"></nz-option>
-                <nz-option nzLabel="Không hoạt động" nzValue="0"></nz-option>
-                <nz-option nzLabel="Đã xóa" nzValue="-1"></nz-option>
-                <nz-option nzLabel="Tất cả" nzValue="-99"></nz-option>
-              </nz-select>
+              <mat-select formControlName="status">
+                <mat-option [value]="1">Hoạt động</mat-option>
+                <mat-option [value]="0">Không hoạt động</mat-option>
+                <mat-option [value]="-1">Đã xóa</mat-option>
+                <mat-option [value]="-99">Tất cả</mat-option>
+              </mat-select>
             </div>
           </div>
         </div>
@@ -31,13 +26,13 @@
   <div class="">
   
     <div class="">
-      <button nz-button nzType="primary" style="margin-left: 5px" class="button-search" (click)="filterEntity()">
-        <i nz-icon nzType="search"></i>{{ "common_button.search" | translate }}
+      <button mat-flat-button color="primary" style="margin-left: 5px" class="button-search" (click)="filterEntity()">
+        <mat-icon>search</mat-icon>>{{ "common_button.search" | translate }}
       </button>
       <button
         class=""
-        nz-button
-        nzType="primary"
+        mat-flat-button
+        color="primary"
         type="button"
         (click)="showModalAdd()"
         *ngIf="isVisibleAdd">

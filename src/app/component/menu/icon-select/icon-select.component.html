@@ -1,1 +1,16 @@
-<p>icon-select works!</p>
+<div class="input-wrap" [formGroup]="form">
+  <label class="title-detail">Icon </label>
+  <mat-label>Chọn icon</mat-label>
+  <mat-select [(ngModel)]="selectedIcon" formControlName="icon">
+    <mat-option nzCustomContent *ngFor="let icon of optionList" [value]="icon">
+      <mat-icon>{{ icon }}</mat-icon>{{icon}}
+    </mat-option>
+  </mat-select>
+  <ng-template #customSelectedTemplate let-selected> <mat-icon>{{selected.nzValue}}</mat-icon>{{ selected.nzLabel }}
+  </ng-template>
+
+  <ng-template #renderTemplate>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+  </ng-template>
+
+</div>

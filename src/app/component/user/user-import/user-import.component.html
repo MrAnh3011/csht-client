@@ -1,1 +1,256 @@
-<p>user-import works!</p>
+<nz-modal [(nzVisible)]="isVisibleImport" nzWidth="900px" nzClosable="false" [nzTitle]="title" nzMaskClosable="false">
+    <div class="col-md-12">
+        <mat-stepper [nzCurrent]="current">
+            <mat-step label="Thiết lập thông tin"></mat-step>
+            <mat-step label="Kiểm tra thông tin"></mat-step>
+            <mat-step label="Kết quả"></mat-step>
+        </mat-stepper>
+        <mat-spinner [nzSpinning]="loading">
+            <div class="steps-content">
+                <div *ngIf="current === 0">
+                    <form [formGroup]="formImportUser" #form=ngForm (ngSubmit)="validateImport()">
+                        <div class="row">
+                            <label class="col-md-3 col-form-label">Loại user</label>
+                            <div class="col-md-6 col-form-label col-form-label-flex">
+                                <mat-radio-group formControlName="importType" [(ngModel)]="radioValue"
+                                    (ngModelChange)="getRoles()">
+                                    <mat-radio-button [value]=0>User Bss</mat-radio-button>
+                                    <mat-radio-button [value]=1>User Erp</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-9 col-form-label text-danger">Sử dụng tệp mẫu của hệ thống và
+                                        nhập liệu đúng cấu trúc theo hướng dẫn và không quá 50 dòng</label>
+                                    <div class="col-sm-3">
+                                        <button type="button" [appDownloadFile]="userImportTemplate.url"
+                                            [fileName]="userImportTemplate.fileName"
+                                            style="width: 200px; border: 1px solid #4CAF50;" nz-button><i nz-icon
+                                                nzType="download"></i>Tải tệp mẫu
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">{{'Chọn tệp' | translate }} <em
+                                            class="fa fa-asterisk required"></em></label>
+                                    <div class="col-sm-6">
+                                        <input placeholder="*.xls, xlsx" formControlName="fileName" nz-input
+                                            [maxLength]="100" />
+                                        <div *ngIf="submitted && controls.fileName.errors?.required && (controls.fileName.touched || form.submitted)"
+                                            class="text-danger">Bạn cần chọn tệp dữ liệu
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <!-- <nz-upload [nzBeforeUpload]="beforeUpload" [nzMultiple]="false"
+                                            [nzCustomRequest]="handleUpload" [nzShowUploadList]="false"
+                                            (nzChange)="setFormValue($event)">
+                                            <button type="button" style="width: 200px; border: 1px solid #4CAF50;"
+                                                mat-button><mat-icon>upload</mat-icon>
+                                                Chọn tệp nguồn
+                                            </button>
+                                        </nz-upload> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">{{'Sheet nhập khẩu' | translate }} <em
+                                            class="fa fa-asterisk required"></em></label>
+                                    <div class="col-sm-6">
+                                        <mat-select formControlName="sheet">
+                                            <mat-label>Chọn sheet dữ liệu</mat-label>
+                                            <mat-option *ngFor="let sheet of sheets" [value]="sheet.index">
+                                                {{sheet.sheetName}}</mat-option>
+                                        </mat-select>
+                                        <div *ngIf="controls.sheet.errors?.required && (controls.sheet.touched || form.submitted)"
+                                            class="text-danger">Bạn cần chọn sheet dữ liệu chi tiết
+                                        </div>
+                                    </div>
+                                    <div *ngIf="checkFileUpload" class="col-sm-3">
+                                        <mat-spinner></mat-spinner>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Chọn vai trò<em
+                                            class="fa fa-asterisk required"></em></label>
+                                    <div class="col-sm-6">
+                                        <mat-select formControlName="roles">
+                                            <mat-label>Chọn vai trò</mat-label>
+                                            <mat-option *ngFor="let role of roles" [value]="role.roleId">
+                                                {{role.roleName}}</mat-option>
+                                        </mat-select>
+                                        <div class="message-required-custom" *ngIf="submitted && controls.roles.errors">
+                                            <div class="text-danger" *ngIf="controls.roles.errors.required">
+                                                Bạn cần chọn vai trò
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div *ngIf="current === 1">
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label">{{'user.total_import_number' | translate : {'number':
+                            totalImportNumber} }}</label>
+                        <label class="col-sm-3 col-form-label">{{'user.success_import_number' | translate : {'number':
+                            successImportNumber} }}</label>
+                        <label class="col-sm-3 col-form-label">{{'user.error_import_number' | translate : {'number':
+                            errorImportNumber} }}</label>
+                        <div class="col-sm-3 col-form-label">
+                            <button mat-button style="width: 200px; border: 1px solid #4CAF50;" (click)="onExport()">
+                                <mat-icon>download</mat-icon>Tải tệp kiểm tra
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="pt-3" style="width: 100%"></div>
+                        <div class="data-table-import" style="width: 100%">
+                            <nz-table #userImportTable [nzData]="dataImportResult" nzShowSizeChanger nzSize="small"
+                                [nzScroll]="{ x: '100%' }" [nzLoading]="loading" [nzShowTotal]="rangeTemplate">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th class="text-nowrap">Username</th>
+                                        <th class="text-nowrap">Tên đầy đủ</th>
+                                        <th class="text-nowrap">Số điện thoại</th>
+                                        <th class="text-nowrap">Email</th>
+                                        <th class="text-nowrap" *ngIf="controls.importType.value == 1">Loại tổ chức</th>
+                                        <th class="text-nowrap" *ngIf="controls.importType.value == 1">Tổ chức</th>
+                                        <th class="text-nowrap">Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of userImportTable.data, index as i"
+                                        [class]="data.success ? 'text-success' : 'text-danger'">
+                                        <td>{{i + 1}}</td>
+                                        <td class="text-nowrap">{{ data.userName }}</td>
+                                        <td class="text-nowrap">{{ data.name }}</td>
+                                        <td class="text-nowrap">{{ data.phone }}</td>
+                                        <td class="text-nowrap">{{ data.email }}</td>
+                                        <td class="text-nowrap" *ngIf="controls.importType.value == 1">{{ data.orgType
+                                            }}</td>
+                                        <td class="text-nowrap" *ngIf="controls.importType.value == 1">{{ data.orgId }}
+                                        </td>
+                                        <td class="text-nowrap">{{ data.description }}</td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                            <ng-template #rangeTemplate let-range="range" let-total>
+                                {{ range[0] }}-{{ range[1] }} {{'of' | translate }} {{ total }} {{'items' | translate }}
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="current === 2">
+                    <div style="text-align: center" *ngIf="importSuccess">
+                        <nz-result [nzSubTitle]="titleImportSuccess" [nzIcon]="iconImportSuccess">
+                        </nz-result>
+                    </div>
+                    <div style="text-align: center" *ngIf="!importSuccess">
+                        <nz-result [nzSubTitle]="titleImportError" [nzIcon]="iconImportError">
+                        </nz-result>
+                    </div>
+                </div>
+            </div>
+            <div *nzModalFooter>
+                <button *ngIf="current === 0 || current === 2" nz-button (click)="handleClose()">{{'cancel' | translate
+                    }}</button>
+                <button *ngIf="current === 0" nz-button (click)="validateImport()" nzType="primary"
+                    class="button-submit">Tiếp theo</button>
+                <button *ngIf="current === 1" nz-button (click)="pre()">Quay lại</button>
+                <button *ngIf="current === 1" nz-button (click)="importFileExcel()" nzType="primary"
+                    class="button-submit">Thực hiện</button>
+                <button *ngIf="current === 2" nz-button (click)="reImport()" nzType="primary" class="button-submit">Nhập
+                    dữ liệu tiếp</button>
+            </div>
+        </mat-spinner>
+    </div>
+</nz-modal>
+
+<ng-template #title>
+    {{'user.title_import_user' | translate }}
+    <div class="pull-right icon-close">
+        <em (click)="handleClose()" nz-icon nzType="close" nzTheme="outline"></em>
+    </div>
+</ng-template>
+
+<ng-template #titleImportError>
+    <label>{{'user.total_import_number' | translate : {'number': totalImportNumber} }}</label><br>
+    <label>{{'user.error_import_number' | translate : {'number': errorImportNumber} }}</label>
+</ng-template>
+<ng-template #iconImportError>
+    <img src="assets/image/error.png" height="160" width="160" />
+</ng-template>
+
+<ng-template #titleImportSuccess>
+    <label>{{'user.total_import_number' | translate : {'number': totalImportNumber} }}</label><br>
+    <label style="color: #00b300;">{{'user.success_import_number' | translate : {'number': successImportNumber}
+        }}</label><br>
+    <label class="text-danger">{{'user.error_import_number' | translate : {'number': errorImportNumber} }}</label><br>
+    <label> <button mat-button style="width: 200px; border: 1px solid #4CAF50;" (click)="exportResult()"><mat-icon>download</mat-icon>Tải tệp kết quả
+        </button></label><br>
+    <div class="data-table-import" style="width: 100%; display: none;">
+        <table style="width: 100%;" id="table-export">
+            <thead>
+                <tr>
+                    <th style="font-weight: bold; text-align: center; border: 1px solid;">STT</th>
+                    <th style="font-weight: bold; text-align: center; border: 1px solid;" class="text-nowrap">Username
+                    </th>
+                    <th style="font-weight: bold; text-align: center; border: 1px solid;" class="text-nowrap">Tên đầy đủ
+                    </th>
+                    <th style="font-weight: bold; text-align: center; border: 1px solid;" class="text-nowrap">Số điện
+                        thoại</th>
+                    <th style="font-weight: bold; text-align: center; border: 1px solid;" class="text-nowrap">Email</th>
+                    <th style="font-weight: bold; text-align: center; border: 1px solid;" class="text-nowrap"
+                        *ngIf="controls.importType.value == 1">Loại tổ chức</th>
+                    <th style="font-weight: bold; text-align: center; border: 1px solid;" class="text-nowrap"
+                        *ngIf="controls.importType.value == 1">Tổ chức</th>
+                    <th style="font-weight: bold; text-align: center; border: 1px solid;" class="text-nowrap">Mật khẩu
+                    </th>
+                    <th style="font-weight: bold; text-align: center; border: 1px solid;" class="text-nowrap">Trạng thái
+                    </th>
+                    <th style="font-weight: bold; text-align: center; border: 1px solid;" class="text-nowrap">Trạng thái
+                        gửi SMS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of importDataSuccess, index as i"
+                    [class]="data.success ? 'text-success' : 'text-danger'">
+                    <td style="border: 1px solid;">{{i + 1}}</td>
+                    <td style="border: 1px solid;" class="text-nowrap">{{ data.userName }}</td>
+                    <td style="border: 1px solid;" class="text-nowrap">{{ data.name }}</td>
+                    <td style="border: 1px solid;" class="text-nowrap">{{ data.phone != null ? "'" + data.phone : '' }}
+                    </td>
+                    <td style="border: 1px solid;" class="text-nowrap">{{ data.email }}</td>
+                    <td style="border: 1px solid;" class="text-nowrap" *ngIf="controls.importType.value == 1">{{
+                        data.orgType }}</td>
+                    <td style="border: 1px solid;" class="text-nowrap" *ngIf="controls.importType.value == 1">{{
+                        data.orgId }}</td>
+                    <td style="border: 1px solid;" class="text-nowrap">{{ data.password }}</td>
+                    <td style="border: 1px solid;" class="text-nowrap">{{ data.description }}</td>
+                    <td style="border: 1px solid;" class="text-nowrap">{{ data.smsDescription }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+<ng-template #iconImportSuccess>
+    <img src="assets/image/success.png" height="160" width="160" />
+</ng-template>

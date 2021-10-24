@@ -1,0 +1,109 @@
+.login-form {
+    max-width: 500px;
+  }
+  
+  .login-form-margin {
+    margin-bottom: 16px;
+  }
+  
+  .login-form-forgot {
+    float: right;
+  }
+  
+  .login-form-button {
+    width: 100%;
+    max-width: 250px;
+    display: block;
+    margin: auto;
+  }
+  .ant-form-item-label {
+    line-height: 22px;
+  }
+  img.avatar {
+    max-width: 150px;
+    border: solid 1px #ccc;
+  }
+  
+  .message-required {
+    margin-left: 0px;
+    margin-bottom: 8px;
+    color: red;
+  }
+  .avatar-uploader .ant-upload {
+    width: 100% !important;
+    background: red;
+    border: solid 2px red;
+  }
+  .ant-upload.ant-upload-select-aaa {
+    display: table;
+    float: left;
+    width: 100%;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    text-align: center;
+    vertical-align: top;
+    background-color: #fafafa;
+    border: 1px dashed #d9d9d9;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  :host ::ng-deep .avatar-uploader > .ant-upload {
+    width: 128px;
+    height: 128px;
+  }
+  .content-firstLog {
+    width: 600px;
+    margin: auto;
+    max-width: 100%;
+    padding: 8px 5px;
+    border: 1px solid #ababab;
+    background: #f0f2f5;
+    text-align: center;
+    color: red;
+    font-size: 15px;
+    margin-bottom: 15px;
+  }
+  .group-changePass {
+    width: 600px;
+    max-width: 100%;
+    margin: auto;
+    padding: 30px 50px;
+    border: 1px solid #ababab;
+    background: #f0f2f5;
+  }
+  .group-inforUser {
+    width: 800px;
+    max-width: 100%;
+    margin: auto;
+    padding: 30px 50px;
+    border: 1px solid #ababab;
+    background: #f0f2f5;
+  }
+  .content-infors {
+    display: grid;
+    grid-template-columns: auto 126px;
+    grid-gap: 30px;
+  }
+  @media screen and (max-width: 600px) {
+    .group-changePass {
+      padding: 15px;
+    }
+    .group-inforUser{
+      padding: 15px;
+    }
+    .content-infors {
+      grid-template-columns: 100%;
+      grid-gap: 15px;
+  }
+  .infor-items {
+    order: 2;
+  }
+  .avatar-item {
+    justify-self: center;
+  }
+  .avatar-item nz-form-item {
+    margin: 0;
+  }
+  }
+  

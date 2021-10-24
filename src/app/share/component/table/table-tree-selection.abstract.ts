@@ -1,5 +1,6 @@
 import { TableTreeExpandAbstract } from './table-tree-expand.abstract';
 import { TableSelectionInterface } from './table-selection.interface';
+import { Menu } from 'src/app/core/models/menu.class';
 
 export abstract class TableTreeSelectionAbstract extends TableTreeExpandAbstract implements TableSelectionInterface {
 
@@ -11,8 +12,8 @@ export abstract class TableTreeSelectionAbstract extends TableTreeExpandAbstract
   mapOfIndeterminateId: { [key: string]: boolean } = {};
   numberOfChecked = 0;
 
-  currentPageDataChange($event: any[]): void {
-    this.listOfDisplayData = $event;
+  currentPageDataChange($event: readonly Menu[]): void {
+    this.listOfDisplayData = $event as any[];
     this.refreshStatus();
   }
 

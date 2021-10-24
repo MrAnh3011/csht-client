@@ -10,6 +10,7 @@ export interface Group {
   roleIds: number[];
   applicationId?: number;
   status: number;
+  roleResponses: any;
 }
 
 export class Pagination {

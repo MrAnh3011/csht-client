@@ -77,13 +77,13 @@
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="checkAllRow($event === null)" [checked]="isAllDisplayDataChecked"
-            [indeterminate]="isIndeterminate">
+          <mat-checkbox [checked]="isAllDisplayDataChecked" [indeterminate]="isIndeterminate"
+            (change)="checkAllRow($event === null)">
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()" (change)="refreshStatus()"
-            [checked]="mapOfCheckedId[data.userId]">
+          <mat-checkbox [checked]="mapOfCheckedId[data.userId]" (click)="$event.stopPropagation()"
+            (change)="refreshStatus()">
           </mat-checkbox>
         </td>
       </ng-container>
@@ -148,9 +148,10 @@
       [groupsAdd]="groups"></app-add-user>
   </div>
   <ng-container *ngIf="isVisibleRole">
-    <app-roles-user-modal (cancel)="closeModalAuthen($event)" [isVisibleRole]="isVisibleRole" [nodes]="nodes"
-      [defaultCheckedKeys]="defaultCheckedKeys" [user]="user" [titleModelRole]="'Phân quyền người dùng'">
+    <app-roles-user-modal [titleModelRole]="'Phân quyền người dùng'" (cancel)="closeModalAuthen($event)"
+      [isVisibleRole]="isVisibleRole" [nodes]="nodes" [defaultCheckedKeys]="defaultCheckedKeys" [user]="user">
     </app-roles-user-modal>
   </ng-container>
-  <app-user-import [isVisibleImport]="isVisibleImport" (modalState)="toggleModalImport($event === null)"></app-user-import>
+  <app-user-import [isVisibleImport]="isVisibleImport" (modalState)="toggleModalImport($event === null)">
+  </app-user-import>
 </div>

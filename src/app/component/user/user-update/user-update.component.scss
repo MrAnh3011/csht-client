@@ -1,0 +1,20 @@
+.ant-select {
+    width: 400px !important;
+  }
+  .date-picker {
+    width: 400px;
+  }
+  a.permission_user i {
+    transform: translateY(2px);
+    margin-right: 5px;
+  }
+  a.permission_user {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    border: 1px solid #d9d9d9;
+    justify-content: center;
+    font-weight: bold;
+  }
+  

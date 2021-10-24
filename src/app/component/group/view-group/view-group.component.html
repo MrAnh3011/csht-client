@@ -1,1 +1,118 @@
-<p>view-group works!</p>
+<div class="search-form search-only-input">
+    <div class="btn-right">
+      <div class="input-wrap">
+        <input class="form-control" type="text" name="search" autocomplete="off" [(ngModel)]="searchText"
+               placeholder="Tên nhóm" (input)="searchData()">
+      </div>
+    </div>
+    <div class="btn-left">
+      <button nz-button nzType="primary" class="btn-add btn-add-asset" type="button" (click)="showModalAdd()"
+              *ngIf="checkAdd">
+        <em class="fas fa-plus"></em> {{'add_user' | translate }}
+      </button>
+  
+      <report-download-selection
+        *ngIf="checkExport"
+        [url]="DOWNLOAD_REPORT_URL"
+        [fileName]="REPORT_NAME"
+        [isAll]="!(numberOfChecked > 0)"
+        [dataChoose]="getCheckedIdList(searchText, searchGroups)"
+      >
+      </report-download-selection>
+  
+      <button class="btn-delete btn-delete-group" mat-flat-button color="warn" (click)="showConfirm()"
+              *ngIf="checkDelete && numberOfChecked != 0">{{'delete' | translate }}</button>
+  
+    </div>
+  
+  </div>
+  <div class="data-table">
+    <nz-table
+      #basicTable
+      nzShowSizeChanger
+      nzSize="small"
+      [nzData]="searchGroups"
+      [nzFrontPagination]="false"
+      [nzLoading]="loading"
+      [nzShowTotal]="rangeTemplate"
+      [nzTotal]="total"
+      [(nzPageIndex)]="page"
+      [(nzPageSize)]="defaultPage"
+      (nzPageIndexChange)="getListGroup()"
+      (nzPageSizeChange)="getListGroup(true)"
+      (nzCurrentPageDataChange)="currentPageDataChange($event)">
+      <thead>
+      <tr>
+        <th
+          nzShowCheckbox
+          nzLeft="0px"
+          nzWidth="50px"
+          [(nzChecked)]="isAllDisplayDataChecked"
+          [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAllRow($event)"></th>
+        <th class="text-nowrap" width="50px">#</th>
+        <th class="text-nowrap">{{'name' | translate }}</th>
+        <th class="text-nowrap">{{'description' | translate }}</th>
+        <th class="text-nowrap">{{'status' | translate }}</th>
+        <th class="text-nowrap">{{'role' | translate }}</th>
+        <th nzWidth="75px" nzRight="0px" class="text-nowrap"
+            *ngIf="checkUpdate || checkDelete">{{'action' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of basicTable.data ;let i = index;">
+        <td
+          nzShowCheckbox
+          [(nzChecked)]="mapOfCheckedId[data.groupId]"
+          (nzCheckedChange)="refreshStatus()"
+          nzLeft="0px"
+          nzWidth="50px"></td>
+        <td class="text-nowrap">{{getRowIndex(i, basicTable.nzPageIndex, basicTable.nzPageSize)}}</td>
+        <td class="text-nowrap">{{ data.name }}</td>
+        <td class="text-nowrap">{{ data.description}}</td>
+        <td class="text-nowrap">
+          <nz-tag [nzColor]="'#ff0000'"
+          *ngIf="data.status == 0">Inactive</nz-tag>
+          <nz-tag [nzColor]="'#108ee9'"
+          *ngIf="data.status == 1">Active</nz-tag>
+        </td>
+        <td class="text-nowrap">
+          <nz-tag [nzColor]="'#108ee9'"
+                  *ngIf="data.roleResponses!=null && data.roleResponses.length>0">{{data.roleResponses[0].roleName}}
+          </nz-tag>
+          <nz-tag [nzColor]="'#108ee9'"
+                  *ngIf="data.roleResponses!=null && data.roleResponses.length>1">+{{data.roleResponses.length - 1}}...
+          </nz-tag>
+        </td>
+        <td nzWidth="75px" nzAlign="center" nzRight="0px" class="text-nowrap">
+          <button nz-button nzType="link" class="button-update btn-icon" class="button-update btn-icon"
+                  nz-tooltip nzTooltipPlacement="bottom" nzTooltipTitle="{{'edit' | translate }}"
+                  (click)="showModalUpdate(data)" *ngIf="checkUpdate"><i class="far fa-pencil-alt"></i></button>
+                  <button nz-button nzType="link" class="button-update btn-icon"
+                  nz-tooltip nzTooltipPlacement="bottom" nzTooltipTitle="{{'authen' | translate }}"
+                  (click)="showModalAuthen(data)" *ngIf="checkSetAuthen">
+            <i class="fas fa-user-alt"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} {{'of' | translate }} {{ total }} {{'items' | translate }}
+    </ng-template>
+  </div>
+  <app-add-group [isVisibleAdd]="isVisibleAdd" (data)="addGroup()" (submitAdd)="closeModalAdd()"
+                 [roleAdd]="roles"></app-add-group>
+  <div *ngIf="group!=null">
+    <app-update-group [isVisibleUpdate]="isVisibleUpdate" [group]="group" (submitUpdate)="updateGroup()"
+                      (cancelUpdate)="closeModalUpdate()"
+                      [roleUpdate]="roles"></app-update-group>
+    <ng-container *ngIf="isVisibleRole">
+      <app-roles-group-modal (cancel)="closeModalAuthen($event)" [isVisibleRole]="isVisibleRole" 
+        [nodes]="nodes" [defaultCheckedKeys]="defaultCheckedKeys" 
+        [group]="group"
+        [titleModelRole]="'Phân quyền nhóm'">
+      </app-roles-group-modal>
+    </ng-container>
+  </div>
+  

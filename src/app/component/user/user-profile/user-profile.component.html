@@ -1,1 +1,138 @@
-<p>user-profile works!</p>
+<mat-tab-group>
+    <mat-tab label="Thông tin cá nhân">
+      <div nz-row>
+        <div class="group-inforUser">
+          <form [formGroup]="formProfile" (ngSubmit)="submitForm()">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">
+  
+                  <!-- Name -->
+                  <div class="input-wrap">
+                    <label class="title-detail">{{'name' | translate}}</label>
+                    <input matInput formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                  </div>
+                  <div class="message-required" *ngIf="submitted && f.name.errors">
+                    <div *ngIf="f.name.errors.required">
+                      {{'name' | translate }} {{'ms_validate_required' | translate }}
+                    </div>
+                    <div *ngIf="f.name.errors.minlength">
+                      {{'name' | translate }} {{'ms_validate_more_characters_long' | translate }}
+                    </div>
+                    <div *ngIf="f.name.errors.maxlength">
+                      {{'name' | translate }} {{'ms_validate_less_characters_long' | translate }}
+                    </div>
+                  </div>
+  
+                  <!-- Email -->
+                  <div class="input-wrap">
+                    <label class="title-detail">{{'Email' | translate}}</label>
+                    <input matInput formControlName="email" type="email"
+                      [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                  </div>
+                  <div class="message-required" *ngIf="submitted && f.email.errors">
+                    <div *ngIf="f.email.errors.required">
+                      {{'email' | translate }} {{'ms_validate_required' | translate }}
+                    </div>
+                    <div *ngIf="f.email.errors.minlength">
+                      {{'email' | translate }} {{'ms_validate_more_characters_long' | translate }}
+                    </div>
+                    <div *ngIf="f.email.errors.maxlength">
+                      {{'email' | translate }} {{'ms_validate_less_characters_long' | translate }}
+                    </div>
+                    <div *ngIf="f.email.errors.email">{{'email' | translate }}
+                      {{'ms_validate_email_invalid_address' | translate }}</div>
+                    <div *ngIf="f.email.errors.cannotContainSpace">{{'email' | translate }}
+                      {{'ms_validate_space' | translate }}</div>
+                  </div>
+  
+                  <!-- Phone -->
+                  <div class="input-wrap">
+                    <label class="title-detail">{{'Phone' | translate}}</label>
+                    <input matInput formControlName="phone" maxlength="11"
+                      [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
+                  </div>
+                  <div class="message-required" *ngIf="submitted && f.phone.errors">
+                    <div *ngIf="f.phone.errors.required">
+                      {{'mobile' | translate }} {{'ms_validate_required' | translate }}
+                    </div>
+                    <div *ngIf="f.phone.errors.pattern">
+                      {{'mobile' | translate }} {{'ms_validate_phone_invalid_address' | translate }}
+                    </div>
+                  </div>
+  
+                  <div class="input-wrap">
+                  <label class="title-detail"></label>
+                  <button mat-button class="login-form-button login-form-margin"
+                    color="primary">{{'save' | translate}}</button>
+                  </div>
+                </div>
+  
+                <!-- Avatar -->
+                <div class="avatar-item col-md-6">
+                  <app-upload-image [isLabel]=true [maxSize]="200000" [minSize]="0" imgName="avatar" iconClass="user" [maxWidth]= "600" [maxHeight]= "900" label='avatar'
+                    [actionLink]="uploadAvatarUrl"></app-upload-image>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Đổi mật khẩu">
+      <div *ngIf="userInfo.status == '0'" class="content-firstLog"> {{'first_login' | translate}}</div>
+      <div class="group-changePass">
+        <form [formGroup]="formChangePassword" (ngSubmit)="submitFormChangePassword()">
+          <div>
+            <div class="changePass-items">
+              <mat-form-field>
+                <mat-label>{{'old_password' | translate}}</mat-label>
+                  <input type="password" nz-input formControlName="oldPassword"
+                    [ngClass]="{ 'is-invalid': submitted && fChangePass.oldPassword.errors }" />
+                  <div class="message-required" *ngIf="pSubmitted && fChangePass.oldPassword.errors">
+                    <div *ngIf="fChangePass.oldPassword.errors.required">
+                      {{'old_password' | translate }} {{'ms_validate_required' | translate }}
+                    </div>
+                    <div *ngIf="fChangePass.oldPassword.hasError('minlength')">
+                      {{'old_password' | translate }} {{'ms_validate_more_characters_long' | translate }}
+                    </div>
+                  </div>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>{{'password' | translate}}</mat-label>
+                  <input type="password" matInput formControlName="password" (ngModelChange)="updateConfirmValidator()"
+                    [ngClass]="{ 'is-invalid': submitted && fChangePass.password.errors }" />
+                  <div class="message-required" *ngIf="pSubmitted && fChangePass.password.errors">
+                    <div *ngIf="fChangePass.password.errors.required">
+                      {{'password' | translate }} {{'ms_validate_required' | translate }}
+                    </div>
+                    <div *ngIf="fChangePass.password.hasError('minlength')">
+                      {{'password' | translate }} {{'ms_validate_more_characters_long' | translate }}
+                    </div>
+                  </div>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>{{'check_password' | translate}}</mat-label>
+                  <input type="password" matInput formControlName="checkPassword"
+                    [ngClass]="{ 'is-invalid': submitted && fChangePass.checkPassword.errors }" />
+                  <div class="message-required" *ngIf="pSubmitted && fChangePass.checkPassword.errors">
+                    <div *ngIf="fChangePass.checkPassword.errors.required">
+                      {{'check_password' | translate }} {{'ms_validate_required' | translate }}
+                    </div>
+                    <div *ngIf="fChangePass.checkPassword.hasError('minlength')">
+                      {{'check_password' | translate }} {{'ms_validate_more_characters_long' | translate }}
+                    </div>
+                    <div *ngIf="fChangePass.checkPassword.hasError('confirm')">
+                      Two passwords that you enter is inconsistent!
+                    </div>
+                  </div>
+              </mat-form-field>
+              <button mat-flat-button class="login-form-button login-form-margin"
+                color="primary">{{'change_password' | translate}}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+  

@@ -21,6 +21,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatStepperModule } from '@angular/material/stepper';
 
 const modules = [
   MatButtonModule,
@@ -43,7 +44,8 @@ const modules = [
   MatNativeDateModule,
   MatMenuModule,
   MatTableModule,
-  MatDialogModule
+  MatDialogModule,
+  MatStepperModule
 ];
 
 @NgModule({

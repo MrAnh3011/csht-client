@@ -6,12 +6,14 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { ActionComponent } from './action/action.component';
 import { EntityModule } from './entity/entity.module';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { AddActionComponent } from './action/add-action/add-action.component';
 
 
 @NgModule({
   declarations: [
     MainLayoutComponent,
     ActionComponent,
+    AddActionComponent,
     WelcomeComponent
   ],
   imports: [

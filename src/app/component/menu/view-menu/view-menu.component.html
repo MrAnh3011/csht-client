@@ -1,1 +1,109 @@
-<p>view-menu works!</p>
+<div class="search-form search-only-input">
+    <div class="btn-right">
+      <div class="input-wrap">
+        <input class="form-control" type="text" name="search" autocomplete="off" [(ngModel)]="searchText"
+               (input)="searchData()" placeholder="Tên Menu">
+      </div>
+    </div>
+    <div class="btn-left">
+      <button nz-button nzType="primary" class="btn-add btn-add-asset" type="button" (click)="showModalAdd()"
+              *ngIf="checkAdd">
+        <em class="fas fa-plus"></em> {{'add_user' | translate }}
+      </button>
+      <report-download-selection
+        *ngIf="checkExport"
+        [url]="DOWNLOAD_REPORT_URL"
+        [fileName]="REPORT_NAME"
+        [isAll]="!(numberOfChecked > 0)"
+        [dataChoose]="getCheckedIdList(searchText, searchedMenus)">
+      </report-download-selection>
+      <mat-button class="btn-delete btn-delete-menu" color="warn" (click)="showConfirm()"
+              *ngIf="checkDelete && numberOfChecked != 0">{{'delete' | translate }}</mat-button>
+  
+    </div>
+  </div>
+  
+  <div class="data-table">
+    <nz-table #expandTable
+              [nzData]="searchedMenus" nzTableLayout="fixed" nzShowSizeChanger
+              [nzShowTotal]="rangeTemplate" nzSize="small"
+              [nzPageSizeOptions]="pageSize" [nzPageSize]="defaultPage"
+              (nzCurrentPageDataChange)="currentPageDataChange($event)">
+      <thead>
+      <tr>
+        <th
+          nzShowCheckbox
+          [(nzChecked)]="isAllDisplayDataChecked"
+          [nzIndeterminate]="isAllIndeterminate"
+          (nzCheckedChange)="checkAll($event)"
+          nzLeft="0px"
+          nzWidth="50px"
+        ></th>
+        <th> - </th>
+        <th class="text-nowrap">{{ 'menu_level' | translate }}</th>
+        <th class="text-nowrap">{{'name' | translate }}</th>
+        <th class="text-nowrap">{{'url' | translate }}</th>
+        <!--      <th class="text-nowrap">{{'description' | translate }}</th>-->
+        <!--      <th class="text-nowrap">{{'created_date' | translate }}</th>-->
+        <th class="text-nowrap">{{'Role' }}</th>
+        <th nzWidth="75px" nzRight="0px" class="text-nowrap"
+            *ngIf="checkUpdate || checkDelete">{{'action' | translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let data of expandTable.data">       
+        <ng-container *ngFor="let item of mapOfExpandedData[data.menuId]">
+          <tr *ngIf="(item.parent && mapOfExpandId[item.parent.menuId]) || !item.parent">
+            <td
+              nzShowCheckbox
+              nzLeft="0px"
+              [(nzChecked)]="mapOfCheckedId[item.menuId]"
+              [nzIndeterminate]="item.menuChildren && mapOfIndeterminateId[item.menuId]"
+              (nzCheckedChange)="refreshStatus(item)"></td>
+            <td
+              [nzIndentSize]="item.level! * 20"
+              [nzShowExpand]="!!item.menuChildren"
+              [(nzExpand)]="mapOfExpandId[item.menuId]"
+              (nzExpandChange)="collapse(mapOfExpandedData[data.menuId], item, $event)"></td>
+            <td class="text-nowrap" [nzIndentSize]="(item.level! - 1) * 10" >{{ 'level' | translate }} {{ item.level }}</td>
+            <td class="text-nowrap" [nzIndentSize]="(item.level! - 1) * 10" >{{item.name}}</td>
+            <td class="text-nowrap">{{item.url}}</td>
+            <td class="text-nowrap">
+              <nz-tag [nzColor]="'#108ee9'"
+                      *ngIf="item.roleDto!=null">{{item.roleDto.description}}</nz-tag>            
+            </td>
+            <td nzWidth="75px" nzAlign="center" class="text-nowrap">
+              <button nz-button nzType="link" class="button-update btn-icon" class="button-update btn-icon"
+                      nz-tooltip nzTooltipPlacement="bottom" nzTooltipTitle="{{'edit' | translate }}"
+                      (click)="showModalUpdate(item)" *ngIf="checkUpdate"><i class="far fa-pencil-alt"></i></button>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+      </tbody>
+    </nz-table>
+  
+  </div>
+  
+  <ng-template #rangeTemplate let-range="range" let-total>
+    {{ range[0] }}-{{ range[1] }} {{'of' | translate }} {{ total }} {{'items' | translate }}
+  </ng-template>
+  <ng-container *ngIf=isVisibleAdd>
+    <app-add-menu
+      (dataAdd)="addMenu($event)"
+      [isVisibleAdd]="isVisibleAdd"
+      (submitAdd)="closeModalAdd($event)"
+      [roles]="roles"
+      [menuParent]="menuParent">
+    </app-add-menu>
+  </ng-container>
+  <ng-container *ngIf=isVisibleUpdate>
+    <app-update-menu
+      [isVisibleUpdate]="isVisibleUpdate"
+      [menu]="selectedMenu"
+      (submitUpdate)="closeModalUpdate($event)"
+      (data)="updateMenu($event)"
+      [roles]="roles"
+      [menuParent]="menuParent">
+    </app-update-menu>
+  </ng-container>

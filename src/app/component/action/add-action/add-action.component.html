@@ -1,1 +1,37 @@
-<p>add-action works!</p>
+<form [formGroup]="formAdd" (ngSubmit)="handleOk()">
+    <nz-modal [(nzVisible)]="isVisibleAdd" class="modal-merchant" nzClosable="false" nzMaskClosable="false"
+        [nzTitle]="title">
+        <ng-template #title>
+            {{'title_modal_add_action' | translate }}
+            <div class="pull-right icon-close">
+                <mat-icon (click)="handleCancel()">close</mat-icon>
+            </div>
+        </ng-template>
+
+        <div class="input-wrap">
+            <label class="title-detail">{{'action' | translate }}<em class="fa fa-asterisk required"></em></label>
+            <input matInput formControlName="name" maxlength="200"
+                [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+        </div>
+        <div class="message-required" *ngIf="submitted && f.name.errors">
+            <div *ngIf="f.name.errors.required">
+                {{'action' | translate }} {{'ms_validate_required' | translate }}
+            </div>
+        </div>
+        <div class="input-wrap">
+            <label class="title-detail">{{'name' | translate }}<em class="fa fa-asterisk required"></em></label>
+            <input matInput formControlName="nameAscii" maxlength="200"
+                [ngClass]="{ 'is-invalid': submitted && f.nameAscii.errors }" />
+        </div>
+        <div class="message-required" *ngIf="submitted && f.nameAscii.errors">
+            <div *ngIf="f.nameAscii.errors.required">
+                {{'name' | translate }} {{'ms_validate_required' | translate }}
+            </div>
+        </div>
+        <div *nzModalFooter>
+            <button mat-flat-button (click)="handleCancel()">{{'cancel' | translate }}</button>
+            <button mat-flat-button color="primary" (click)="handleOk()" class="button-submit">
+                {{'save' | translate}}</button>
+        </div>
+    </nz-modal>
+</form>

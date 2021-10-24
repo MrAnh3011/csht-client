@@ -1,1 +1,31 @@
-<p>user-role works!</p>
+<nz-modal
+  [(nzVisible)]="isVisibleRole"
+  nzClosable="false"
+  nzMaskClosable="false"
+  (nzOnOk)="handleOkRole()"
+  (nzOnCancel)="handleCancelRole()"
+  [nzTitle]="titleModelRole">
+  <nz-input-group [nzSuffix]="suffixIcon">
+    <input type="text" nz-input placeholder="Tìm kiếm..." [(ngModel)]="searchTextRoles" />
+  </nz-input-group>
+  <ng-template #suffixIcon>
+    <i nz-icon nzType="search"></i>
+  </ng-template>  
+  <nz-tree
+      [nzNodes]="nodes"
+      nzCheckable
+      nzMultiple
+      [nzCheckedKeys]="defaultCheckedKeys"      
+      (nzClick)="nzEvent($event)"
+      (nzCheckBoxChange)="nzEvent($event)"
+      [nzSearchValue]="searchTextRoles"
+      (nzExpandChange)="nzEvent($event)"
+      (nzSearchValueChange)="nzEvent($event)"      
+      nzVirtualHeight="300px" nzBlockNode 
+    >
+    </nz-tree>  
+    <div *nzModalFooter>
+      <button nz-button (click)="handleCancelRole()">{{'cancel' | translate }}</button>
+      <button nz-button nzType="primary" (click)="handleOkRole()" class="button-submit button-submit-user">{{'save' | translate }}</button>
+    </div>
+  </nz-modal>

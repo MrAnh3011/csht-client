@@ -1,1 +1,121 @@
-<p>add-menu works!</p>
+<form [formGroup]="formAdd" (ngSubmit)="handleOk()">
+    <nz-modal
+      [(nzVisible)]="isVisibleAdd"
+      nzClosable="false" [nzTitle]="title" nzWidth="900px"
+      nzMaskClosable="false">
+      <ng-template #title>
+        {{'title_modal_add_menu' | translate }}
+        <div class="pull-right icon-close">
+          <em (click)="handleCancel()" nz-icon nzType="close" nzTheme="outline"></em>
+        </div>
+      </ng-template>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-wrap">
+              <label class="title-detail">{{'name' | translate }}<em class="fa fa-asterisk required"></em></label>
+              <input nz-input formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }"/>
+            </div>
+            <div class="message-required" *ngIf="submitted && f.name.errors">
+              <div *ngIf="f.name.errors.required">
+                {{'name' | translate }} {{'ms_validate_required' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-wrap">
+              <label class="title-detail">{{'description' | translate }}</label>
+              <input nz-input formControlName="description"
+                     [ngClass]="{ 'is-invalid': submitted && f.description.errors }"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-wrap">
+              <label class="title-detail">{{'orderPriority' | translate }}<em
+                class="fa fa-asterisk required"></em></label>
+              <nz-input-number class="input-number" formControlName="orderPriority" [nzMin]="1" [nzMax]="10" [nzStep]="1"
+                               [ngClass]="{ 'is-invalid': submitted && f.orderPriority.errors }"></nz-input-number>
+            </div>
+            <div class="message-required" *ngIf="submitted && f.orderPriority.errors">
+              <div *ngIf="f.orderPriority.errors.required">
+                {{'orderPriority' | translate }} {{'ms_validate_required' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-wrap">
+              <label class="title-detail">{{'parentId' | translate }}</label>
+              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="" formControlName="parentId"
+                         [ngClass]="{ 'is-invalid': submitted && f.parentId.errors }">
+                <nz-option *ngFor="let item of menuParent" [nzLabel]="item.name" [nzValue]="item.menuId"></nz-option>
+              </nz-select>
+            </div>
+            <div class="message-required" *ngIf="submitted && f.parentId.errors">
+              <div *ngIf="f.groupName.errors.required">
+                {{'parentId' | translate }} {{'ms_validate_required' | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-wrap">
+              <label class="title-detail">{{'url' | translate }}<em class="fa fa-asterisk required"></em></label>
+              <input nz-input formControlName="url" [ngClass]="{ 'is-invalid': submitted && f.url.errors }"/>
+            </div>
+            <div class="message-required" *ngIf="submitted && f.url.errors">
+              <div *ngIf="f.url.errors.required">
+                {{'url' | translate }} {{'ms_validate_required' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <icon-select></icon-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-wrap">
+              <label class="title-detail">{{'application' | translate }}<em class="fa fa-asterisk required"></em></label>
+              <nz-select class="select-action" nzShowSearch formControlName="applicationId" (ngModelChange)="getApplicationId()">
+                <nz-option nzLabel="Bss" [nzValue]=2></nz-option>
+                <nz-option nzLabel="Oss" [nzValue]=4></nz-option>
+              </nz-select>
+            </div>
+            <div class="message-required" *ngIf="submitted && f.applicationId.errors">
+              <div *ngIf="f.applicationId.errors.required">
+                {{'application' | translate }} {{'ms_validate_required' | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-wrap">
+              <label class="title-detail">{{'Role'}}<em class="fa fa-asterisk required"></em></label>
+              <nz-select nzShowSearch nzPlaceHolder="" [nzMaxTagCount]="3" formControlName="roleId"
+                         [ngClass]="{ 'is-invalid': submitted && f.roleId.errors }">
+                <nz-option *ngFor="let option of roleByApplicationId" [nzLabel]="option.description" [nzValue]="option.roleId"></nz-option>
+              </nz-select>
+            </div>
+            <div class="message-required" *ngIf="submitted && f.roleId.errors">
+              <div *ngIf="f.roleId.errors.required">
+                {{'role' | translate }} {{'ms_validate_required' | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *nzModalFooter>
+        <button nz-button (click)="handleCancel()">{{'cancel' | translate }}</button>
+        <button nz-button nzType="primary" (click)="handleOk()" class="button-submit">{{'save' | translate }}</button>
+      </div>
+    </nz-modal>
+  </form>
+  
