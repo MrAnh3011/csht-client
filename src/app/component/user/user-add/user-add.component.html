@@ -13,8 +13,7 @@
                     <div class="input-wrap">
                         <label class="title-detail">{{'email' | translate }}<em
                                 class="fa fa-asterisk required"></em></label>
-                        <input matInput formControlName="email"
-                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <input matInput formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                     </div>
                     <div class="message-required" *ngIf="submitted && f.email.errors">
                         <div *ngIf="f.email.errors.required">
@@ -147,8 +146,7 @@
                 <div class="col-md-6">
                     <div class="input-wrap">
                         <label class="title-detail">{{'group' | translate }}</label>
-                        <mat-select nzShowSearch nzMode="multiple" nzPlaceHolder="" [nzMaxTagCount]="3"
-                            formControlName="groupIds">
+                        <mat-select formControlName="groupIds">
                             <mat-option *ngFor="let option of groupByApplication" [value]="option.groupId">{{option.groupName}}</mat-option>
                         </mat-select>
                     </div>
